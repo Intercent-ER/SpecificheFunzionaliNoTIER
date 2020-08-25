@@ -1,0 +1,5 @@
+== Interfaccia Web (((10.Interfaccia Web)))
+
+L'interfaccia web è la seconda modalità che NoTI-ER mette a disposizione per l'integrazione lato client, oltre ai servizi. +
+Le funzionalità presenti in interfaccia sono state sviluppate con l'obiettivo di offrire una modalità di _monitoraggio dei documenti_
+in transito su NoTI-ER e implementare una gestione dei componenti in base alla profilazione utente.

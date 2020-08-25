@@ -1,0 +1,21 @@
+== Requisiti di base
+(((3. Requisiti di base)))
+
+NoTI-ER è stato progettato e nel tempo adattato per essere conforme ai seguenti
+requisiti di base:
+
+* rispondere a quanto richiesto dal SiCiPa-ER, ossia realizzare uno strumento
+organizzativo interoperabile per la gestione dei documenti di _e-Procurement_, relativamente
+all'integrazione con il _Sistema di Interscambio_, il _Nodo Smistamento Ordini_, il _sistema di conservazione Par-ER_ e l'infrastruttura _Peppol_,
+supportandone i processi.
+* Promuovere l'utilizzo di UBL come formato di rappresentazione XML di riferimento
+per i documenti di e-Procurement in transito, garantendo la correttezza formale degli stessi.
+* Realizzare una modalità di integrazione lato _client_ "leggera", scalabile e garantita
+da un contesto di elevata sicurezza.
+* Realizzare un'interfaccia Web di monitoraggio, interrogazione e gestione del
+flusso documentale.
+* Garantire il tracciamento di tutte le iterazioni lato client su NoTI-ER e salvare
+in maniera persistente tutti i documenti in transito nel sistema con i relativi _metadati_.
+* Garantire alle piccole e medie imprese, che supportano il _Sistema regionale per la dematerializzazione del ciclo passivo (SiCiPa-ER)_,
+tramite integrazione con la piattaforma SATER, di usufruire di servizi dedicati che permettano
+l'adattamento dei sistemi regionali con quanto richiesto a livello europeo.

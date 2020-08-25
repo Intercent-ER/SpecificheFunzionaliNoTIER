@@ -1,0 +1,46 @@
+== Attori
+(((4. Attori)))
+
+
+Come previsto dagli obblighi normativi, la platea dei possibili client di NoTI-ER
+si divide in:
+
+* Enti che hanno l'obbligo di aderire al SiCiPa-ER: Regione, Enti regionali, Enti e Aziende
+del Servizio Sanitario Regionale, etc.
+* Enti che possono aderire al SiCiPa-ER: Enti locali, Consorzi, Istituti di Istruzione Scolastica, etc.
+
+Inoltre, è importante tenere conto del livello di granularità adottato dai sistemi con i quali NoTI-ER si interfaccia, per risolvere univocamente
+gli emittenti e destinatari dei Documenti nell’ambito del relativo flusso dei messaggi. +
+In particolare, *SdI* utilizza il codice previsto dal *registro iPA* univocamente assegnato alle singole
+unità organizzative degli Enti iscritti, ad esempio gli uffici preposti alla fatturazione footnote:[in generale, il codie iPA è una stringa di 6 caratteri. Ad esempio: UFDPCJ.]. +
+Allo stesso modo, *Peppol* specifica che i documenti in transito sulla relativa infrastruttura (BusDox) siano
+accompagnati da un set di metadati obbligatori, tra i quali l’*identificativo univoco* previsto dalle
+specifiche footnote:[In generale l’Id Peppol è una stringa composta nel formato “xxxx:xxxxxxx”. Ad esempio 9907:1234567890] che identifica un mittente/destinatario di un generico documento UBL.
+
+Per rispettare i vincoli di genericità, e allo stesso tempo supportare il livello di granularità previsto
+da SdI, in NoTI-ER è stato definito un modello a *due livelli gerarchici* per descrivere gli attori client,
+che sono definiti come segue:
+
+* *Organizzazione*: generica entità che si integra lato client con NoTi-ER, per utilizzare
+i servizi resi disponibili ai fini della gestione dei processi di e-Procurement.
+* *Ufficio*: generica entità organizzativa che afferisce ad una ed una sola organizzazione ed è
+univocamente identificata in NoTI-ER come emittente o destinatario di un generico documento.
+
+Un esempio pratico di questa classificazione può essere quello di una ASL (Azienda Sanitaria Locale)
+alla quale afferiscono uno o più _uffici_ (soggetti) preposti a gestire diversi flussi di fatturazione footnote:[si noti come questa struttura a due livelli sia assolutamente analoga a qualle adottata dal registro iPA].
+
+Un'Organizzazione può essere considerata, dunque, un'interfaccia lato client, attraverso la quale
+uno o più _uffici_ ad essa afferenti scambiano documenti di e-Procurement con NoTI-ER. +
+Questo consente di realizzare *un solo client di integrazione* con NoTI-ER per singola Organizzazione,
+garantendo la separazione dei flussi documentali in transito - i quali vengono associati all'identificativo
+univoco dell'_ufficio_ (*Id NoTI-ER*) - e la possibilità di "isolare" il monitoraggio a livello di singoli flussi.
+
+.profilo di integrazione lato client fra NoTI-ER e i vari attori.
+image::images\4.Attori-b4581.png[]
+
+Sull’ufficio vengono quindi fatti “collassare” anche gli identificativi univoci iPA e Peppol, necessari
+per il corretto instradamento dei flussi documentali sui relativi sistemi. Tali identificativi saranno
+però del tutto trasparenti per l’ufficio stesso. +
+Perciò, l'_ufficio_ si identifica in NoTI-ER solamente tramite un *identificativo univoco* assegatogli in fase di registrazione (tale *Id NoTI-ER*).
+In seguito, a seconda del tipo di processo, sarà NoTI-ER stesso a "riconciliare" l'Id NoTI-ER con l'identificativo
+di trasmissione richiesto dal flusso in atto (iPA o Peppol).

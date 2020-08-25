@@ -1,0 +1,147 @@
+== Integrazione (((5.Integrazione)))
+
+Per garantire la corretta gestione del processo applicativo che regola i flussi
+documentali in transito su NoTI-ER, in base ai requisiti specificati al _Capitolo 3_,
+è stata realizzata una forte integrazione con sistemi del tutto eterogenei tra loro,
+quali il *SdI*, il servizio di versamento in conservazione *ParER*, l’infrastruttura *Peppol* (BusDox) e *NSO* e, infine, *SATER*.  +
+Tale integrazione, pur aumentando la complessità a livello applicativo e di processo di NoTI-ER,
+ha consentito di rendere l’iterazione con essi completamente trasparente lato client.
+Il client è tenuto ad implementare le _specifiche tecniche dei servizi_ di NoTI-ER e a conoscere i
+relativi processi applicativi. Allo stesso tempo, il client deve essere in grado di gestire i formati
+utilizzati per rappresentare i documenti (es. il formato XML che descrive l’esito di versamento di ParER).
+
+
+=== Integrazione con SdI
+
+Il Sistema di Interscambio prevede un _flusso di messaggi_ articolato, come descrtto in figura sottostante.
+
+.flusso dei messaggi di SdI
+image::images\5.Integrazione-93f4f.png[]
+
+È importante notare come NoTI-ER si ponga *intermediario completo nei confronti di SdI*,
+implementando sie le funzioni di _trasmissione_ che di _ricezione_.
+
+La logica di integrazione con SdI è stata realizzata secondo le specifiche di servizio in modalità Web Service,
+che prevedono l’implementazione di due *Web Services SOAP* deputate all’ invio (*Trasmissione*) e alla ricezione (*Ricezione*).
+Si noti, inoltre, che le specifiche di servizio SdI impongono che le fatture trasmesse (e ricevute) nel formato FatturaPA siano firmate tramite un
+*Certificato di Firma Elettronica Qualificata* secondo i formati *CAdES-BES* o *XAdES-BES* previsti dalle direttive *AgID* footnote:[Agenzia per l’Italia Digitale. Si veda il sito http://www.agid.gov.it/].
+
+Per raccordare i vari documenti del flusso, in particolare _fatture_ e relative _notifiche_, SdI associa
+inoltre ad ogni documento in ingresso un *identificativo numerico univoco*, detto *identificativo SdI*
+utilizzato come riferimento per le successive notifiche. Tale identificativo viene comunicato da SdI
+a NoTI-ER in fase di invio (o ricezione) di una fattura e opportunamente salvato.
+
+=== Integrazione con Peppol
+
+Come già accennato ai capitoli precedenti, NoTI-ER integra al suo interno un *Access Point* accreditato Peppol footnote:[Il processo di accreditamento prevede il rilascio di un Certificato Digitale che l’Access Point utilizza per accreditarsi presso gli altri Access Point dell’infrastruttura quando invia o riceve documenti.]
+e un proprio *SMP* footnote:[Service Metadata Publisher, sta alla base del paradigma Peppol. Vedi anche https://peppol.eu/what-is-peppol/peppol-transport-infrastructure/], per utilizzare l'infrastruttura _BusDox_ ed inviare e ricevere documenti di e-Procurement in formato UBL. +
+Così come previsto dal progetto europeo EeISI footnote:[acronimo di European eInvoicing Standard in Italy. Vedi https://www.agid.gov.it/it/piattaforme/fatturazione-elettronica/progetto-cef-eeisi], tale Access Point implementa in _trasmissione_ e in _ricezione_ il *protocollo AS4*,
+oltre che al precedente AS2.
+
+
+=== Integrazione con NSO [[anchor-4]]
+
+Con l'entrata in vigore dell'obbligatorietà per le Aziende Sanitarie italiane di raccordarsi
+con il _Nodo di Smistamento Ordini_, per la gestione dell'*ordine elettronico*, NoTI-ER - nel suo ruolo di
+intermediazione per le _Pubbliche Amministrazioni_ della regione Emilia-Romagna - si interfaccia con NSO in uno
+scenario di *validazione* dei documenti.
+
+Il canale di trasmissione degli _ordini elettronici_ fra PA e suo fornitore avviene
+per tramite della rete Peppol. In corrispondenza dell'invio di un documento verso l'_Access Point_ del destinatario,
+NoTI-ER provvede ad inoltrare lo stesso anche ad NSO, che effettua i controlli necessari e, a sua volta, comunica l'esito
+di validazione a NoTI-ER stesso.
+
+=== Integrazione con SATER
+[[anchor-6]]
+
+SATER (*piattaforma di eProcurement*) è lo strumento adottato da Intercent-ER
+a supporto del processo di innovazione delle piccole e medie imprese. +
+Intercent-ER mette a disposizione delle imprese fornitrici, nell’ambito del Nodo
+Telematico di Interscambio dell’Emilia-Romagna, uno strumento accessibile via web,
+attraverso il quale le stesse possono ricevere ordini ed inviare documenti di trasporto (tramite Peppol)
+e fatture ai soggetti che hanno obbligo o facoltà di utilizzo del Sistema SiCiPa-ER. +
+Considerato che l’interfaccia di accesso alle imprese è la piattaforma di eProcurement,
+si è scelto di operare un’integrazione tra questo sistema e NoTI-ER, con i seguenti obiettivi:
+
+* mantenere su NoTI-ER tutti gli _ordini_ e i _documenti di trasporto_, evitando la replicazione dei dati;
+* permettere alle PMI di registrarsi, tramite la piattaforma, come _sender_ e _receiver_ sul SMP di NoTI-ER e
+scegliere, pertanto, di utilizzare tale modalità semplificata di accesso alla rete Peppol;
+* mettere a disposizione della _piattaforma_ una serie di servizi che consentano la compilazione,
+la visualizzazione, l'invio e la ricezione di DDT, ordini e fatture e dei relativi allegati, _notifiche MDN_ footnote:[notifiche che confermano l'avvenuta ricezione, o meno, del documento inviato all'Access Point destinatario.] e _Invoice Response Peppol_ footnote:[notifiche in formato Peppol, riguardanti il flusso di fatture sulla rete.].
+
+=== Integrazione con ParER
+
+Le modalità di versamento in *Conservazione* previste dalle specifiche tecniche di ParER prevedono
+la creazione di una *Unità Documentaria* in cui vengono inseriti tutti i componenti di un singolo
+flusso documentale.
+In particolare, se si considera come riferimento il flusso specificato da SdI, si effettua in una prima
+fase il versamento di un _documento principale_ (fattura nel formato FatturaPA firmata) e in fasi
+successive quello di tutte le _notifiche SdI_ (consegna, scarto, esito, etc.) ad esso correlate, in
+qualità di *annessi* del documento principale.
+Il versamento del documento principale e le successive aggiunte di allegati dell’Unità
+Documentale avvengono in determinate fasi dei processi di e-Procurement gestiti da NoTI-ER.
+ParER, inoltre, richiede che all’atto del versamento siano indicati alcuni dati specifici di
+*Integrazione Fiscale*. Tali dati sono estratti direttamente dal documento, oppure vengono inviati dall’
+utente a seconda del Processo di e-Procurement footnote:[si veda il capitolo dedicato all'integrazione in NoTI-ER dei _dati fiscali_ per il versamento in conservazione.].
+
+
+=== Validazione e Transcodifica
+
+Come specificato nei capitoli precedenti, NoTI-ER adotta UBL come formato XML di riferimento
+per rappresentare i documenti di e-Procurement. +
+Esistono precsi standard che descrivono come deve essere composto un documento UBL,
+con riferimento sia a regole sintattiche (quali campi valorizzare in base al relativo schema XSD)
+e semantiche (come tali campi devono essere valorizzati). +
+NoTI-ER integra una logica che esegue entrambe le validazioni di tutti i documenti UBL
+in transito sul sistema.
+
+* *validazione sintattica*: il documento viene validato sullo schema *XSD* UBL di riferimento (Invoice, CreditNote, etc.)
+* *validazione semantica*: verifica della conformità dei valori dei campi del documento alle specifiche correnti di implementazione di interoperabilità -
+lo strumento utilizzato in questa fase è lo *schematron (SCH)*, un particolare tipo di foglio XSLT.
+
+Il requisito di integrazione con SdI ha invece reso necessario integrare una logica che,
+in fasi specifiche del processo, effettui la _traduzione_ dal formato UBL a quello _fatturaPA_ (e viceversa). +
+Questo avviene perchè il formato _fatturaPA_ è attualmente l'unico supportato dal _Sistema di Interscambio_,
+mentre gli iscritti a NoTI-ER supportano, lato loro, il formato UBL.
+
+A questo punto, esistono in NoTI-ER due tipologie di *transcodifica*:
+
+* dal formato UBL a formato _fatturaPA_ (processo di Outbound);
+* dal formato _fatturaPA_ al formato UBL (processo di Inbound).
+
+Per entrambi i tipi, il documento viene sottoposto ad una trasformazione XSLT che lo converte da un formato ad un altro.
+
+Al termine del processo di transcodifica, NoTI-ER esegue sempre la validazione del documento risultante
+
+* *UBL-> _fatturaPA_*: si esegue la validazione XSD del file.
+* *_fatturaPA_ -> UBL*: si esegue la doppia validazione (XSD + SCH) del file.
+
+=== Firma digitale e Approvazione
+
+SdI richiede che il file in formato _fatturaPA_ sia dotato di *firma elettronica
+qualificata*, pertanto in NoTI-ER è stata integrata una logica che prevede che
+il file in _fatturaPA_, risultante dal processo di transcodifica da UBL, sia firmato
+utilizzando un’apposita funzione disponibile nell’interfaccia WEB footnote:[Applet di firma e kit di firma con lettura del certificato da SmartCard.]. +
+La firma di tutte le fatture in formato FatturaPA viene effettuata da
+Intercent-ER ed il successivo invio a SdI è condizionato all’approvazione
+dell’ufficio emittente della fattura UBL originale, che può essere:
+
+* *automatico*: all'atto dell'invio del documento, l'ufficio emittente stesso autorizza NoTI-ER
+ad inviare la fattura a SdI immediatamente dopo la firma;
+* *manuale*: l'ufficio approva manualmente footnote:[tramite apposita funzione dell'interfaccia Web.]
+l'invio a SdI, dopo aver validato personalmente il risultato della transcodifica da UBL a _fatturaPA_.
+
+=== Visualizzazione documenti
+
+I documenti in formato UBL e _fatturaPA_ sono file XML.  +
+Per consentire la visualizzazione degli stessi in una modalità che garantisca immediata comprensione,
+NoTI-ER integra una funzione di *visualizzazione* dei documenti, producendo un formato HTML formattato
+a partire dal file originale. +
+Per ottenere questo risultato, NoTI-ER mantiene aggiornati i *fogli di stile XSLT* di ciascun documento,
+sia per il formato UBL che per il formato _fatturaPA_.
+
+La visualizzazione può avvenire in due modalità:
+
+* da interfaccia Web, accedendo al dettaglio del singolo documento;
+* da remoto, in quanto i _fogli di stile_ sono pubblicati da NoTI-ER come risorse
+pubbliche e possono essere applicati ai file XML utilizzandone i riferimenti.

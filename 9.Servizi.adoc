@@ -1,0 +1,68 @@
+== Servizi (((9.Servizi)))
+
+I *servizi* sono una delle due modalità complementari lato _client_ offerte da NoTI-ER, utilizzati per la gestione dei flussi documentali. +
+Tutti i servizi esposti da NoTI-ER utilizzano lo stile architetturale *REST* footnote:[Representational State Transfer], in modo da rispondere ai requisiti di integrazione leggera e scalabilità richiesti. +
+In particolare, tali servizi:
+
+* sono basati sul paradigma *client-server*;
+* sono organizzati in termini di *risorse* e azioni sulle stesse -le risorse di NoTI-ER sono i documenti;
+* sono invocabili utilizzando i verbi *HTTP*, in particolare _GET_ e _POST_;
+* sono *stateless*, in quanto ogni singola invocazione contiene tutte le informazioni necessarie ad eseguire l’operazione;
+* forniscono dinamicamente al client i *controlli ipermediali* per gestire l’accesso alle risorse -ad esempio,
+il recupero puntuale del documento avviene tramite URN, precedentemente fornito in fase di recupero lista.
+
+I servizi REST che NoTI-ER rende disponibili footnote:[per conoscere le specifiche di utilizzo dei servizi di NoTI-ER, si rimanda alla consultazione del documento NOTIER_AT_SpecificheServizi disponibile a https://intercenter.regione.emilia-romagna.it/noti-er-fatturazione-elettronica/specifiche-tecniche. ]
+sono quelli atti a garantire tutti i processi di e_Procurement descritti al <<anchor-5, capitolo 7>>. +
+Nello specifico i servizi esposti da NoTI-ER sono:
+
+* invio documento;
+* recupero lista documenti;
+* recupero documento;
+* integrazione dati fiscali;
+* interrogazione Peppol Directory;
+* lookup participantID;
+* blocco conservazione.
+
+Inoltre, in un'ottica di integrazione con SATER footnote:[vedi <<anchor-6, paragrafo 5.4. Integrazione con SATER>>.], NoTI-ER espone i seguenti servizi dedicati:
+
+* registrazione PMI su SMP;
+* recupero Lista Documenti;
+* recupero Documento;
+* invio Documento;
+* recupero massivo dei documenti.
+
+=== Metadati
+
+Per garantire la _statefulness_ delle singole invocazioni, i servizi di NoTI-ER basati sulle chiamate di tipo _POST_ richiedono che
+oltre al documento venga inviato anche un apposito file dei _metadati_ footnote:[anche i file dei metadati seguono uno specifico schema XSD definito a priori]. +
+Il file dei metadati è un file XML accessorio che consente a NoTI-ER di:
+
+. verificare l'identità ed il ruolo dell'_ufficio emittente_, attraverso l'*id NoTI-ER* specificato;
+. costruire la *chiave logica* del documento oppure individuare il documento su cui operare (come, ad esempio, nel caso di integrazione fiscale);
+. comunicare l'*instradamento* del documento;
+. fornire informazioni aggiuntive necessarie per la corretta gestione del documento, come l'_id peppol_ destinatario nel caso di documenti da inviare su Peppol.
+
+Nel rispetto dei requisiti di tracciabilità, NoTI-ER salva i _metadati_ relativi a tutte le invocazioni ricevute per i suoi servizi.
+
+=== Sicurezza
+
+NoTI-ER gestisce l'accesso ai servizi REST in un contesto di elevata sicurezza, esponendo questi ultimi esclusivamente su *protocollo HTTPS* con un livello di
+crittografia/autenticazione basato su *TLS* footnote:[Transport Layer Security]. +
+Inoltre, ad ogni invocazione dei servizi, vengono effettuate le opportune verifiche di:
+
+* *autenticazione* del client su NoTI-ER;
+* *autorizzazione* ad operare sullo specifico _servizio_ e sulla specifica risorsa _documento_.
+
+La fase di _autenticazione_ viene implementata con la *client authentication* per mezzo del *certificato digitale*. +
+In fase di accreditamento di una nuova _organizzazione_ viene generato un _certificato digitale_ a partire da un _certificato CA (Certification Authority)_,
+specifico dell'organizzazione stessa. +
+Al momento dell'invocazione del servizio, il client stabilisce una connessione HTTPS attivando la _client authentication_, con il proprio certificato, inviando una
+request all'endpoint di riferimento. La request viene intercettata da NoTI-ER a monte dell'endpoint, che effettua il _trusting_ del certificato client
+su quello CA. +
+Se la fase di _trusting_ non viene superata, il client non riesce ad accedere all'endpoint del servizio e la request viene rifiutata. +
+Se invece il _trusting_ viene superato, NoTI-ER estrae dal certificato client le informazioni specifiche che servono per identificare univocamente l'organizzazione. Tali informazioni
+vengono aggiunte alla request e vengono utilizzate per effettuare la fase successiva di _autorizzazione_. +
+La fase di *autorizzazione* dipende dal servizio che viene invocato ed esegue tutta una serie di controlli sulla congruenza dei dati da elaborare e sulle abilitazioni del soggetto.
+
+.client authentication per i servizi REST
+image::images\9.Servizi-c4b76.png[]

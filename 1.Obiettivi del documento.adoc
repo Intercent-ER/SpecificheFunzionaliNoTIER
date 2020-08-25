@@ -1,0 +1,12 @@
+== Obiettivi del documento (((1. Obiettivi del documento)))
+
+
+Il presente documento ha lo scopo di tracciare e descrivere le specifiche funzionali del sistema NoTI-ER nei seguenti ambiti:
+
+* gli *attori* coinvolti;
+
+* l’*integrazione* con altri sistemi;
+* gli *oggetti* che gestisce, ovvero i documenti relativi ai cicli di e-Procurement;
+* i *processi di e-Procurement* che gestisce;
+* i *processi applicativi* che implementa;
+* i *servizi* e l’*interfaccia WEB* che rende disponibili.

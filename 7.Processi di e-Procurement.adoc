@@ -1,0 +1,382 @@
+== Processi di e-Procurement (((7. Processi di e-Procurement))) [[anchor-5]]
+
+NoTI-ER offre una gestione completa sia nei processi di Inbound che in quelli di Outbound,
+così come dettagliato nei paragrafi successivi.
+
+=== Processi di Outbound e Ciclo Attivo
+
+Per convenzione, si considera il processo di
+Outbound come l'insieme di tutte le fasi che seguono l'invio su NoTI-ER di un documento principale.
+
+In fase di _Invio_, l'ufficio emittente deve specificare l'instradamento da assegnare al documento. +
+La scelta dei canali verso i quali si sceglie di far transitare il documento viene effettuata al momento della
+compilazione dei *metadati* di invio. +
+In particolare, questo avviene mediante la valorizzazione a _true_ o _false_ di alcuni campi che devono essere presenti
+nel file XML:
+
+* *invio a SdI*: attiva il processo che prevede l'invio di fatture e note di credito,
+la transcodifica, la firma remota e la gestione del flusso dei messaggi nell'interazione
+con il Sistem di Interscambio;
+* *invio a Peppol*: attiva il processo in cui il documento viene direttamente inviato
+all'Access point destinatario footnote:[in base a quando specificato negli stessi metadati.]
+senza subire elaborazioni, gestendo la _MDN_ di ritorno.
+* *invio in conservazone*: attiva la procedura di versamento in conservazione, parallelamente
+all'invio verso SdI o verso Peppol.
+
+[NOTE]
+====
+A partire dal 01-02-2020, con l'introduzione dell'obbligatorietà per le *Aziende
+Saitarie* di interfacciarsi con il *Nodo Smistamento Ordini*, gli ordini inviati
+ai fornitori di queste ultime vengono inoltrati ache ad NSO, in parallelo all'invio
+effettuato su rete Peppol. +
+Ne consegue la necessità da parte di NoTI-ER di gestire il _flusso dei messaggi_ che avviene contestualmente footnote:[si intende la gestione degli esiti della validazione, elaborati come _ricevuta di consegna_ o come _notifica di scarto_.].
+====
+
+I *flussi* che sono compresi in questo processo, di cui i *documenti* che ne prendono parte
+vengono classificati come documenti di *Ciclo Attivo*, sono:
+
+* *ufficio -> NoTI-ER -> SdI*: [underline]#fattura e nota di credito# giungono a NoTI-ER in formato
+UBL, vengono validate e convertite in formato _fatturaPA_, firmate CAdES ed inoltrate a SdI;
+* *ufficio -> NoTI-ER -> Peppol*: [underline]#ordine e documento di trasporto# giungono a NoTI-ER (secondo corner dell'infrastruttura Peppol) in formato UBL,
+vengono validati ed inoltrati direttamente all'Access Point ricevente;
+* *ufficio -> NoTI-ER -> NSO*: gli [underline]#ordini# BIS 3.0., che giungono a NoTI-ER dalle Aziende Sanitarie,
+oltre ad essere inviati su Peppol per la consegna al destinatario vengono inoltrati anche ad NSO per poter essere validati.
+
+Oltre ai quattro documenti principali, vengono classificati documenti di *CA* anche
+i *documenti correlati*, di ritorno da questi flussi:
+
+* *SdI -> NoTI-ER -> ufficio*: [underline]#ricevuta di consegna, notifica di mancata consegna,
+notifica di scarto, attestazione di file non recapitabile, notifica di decorrenza termini e
+notifica di esito cedente# giungono a NoTI-ER in formato _fatturaPA_  e sono messe a disposizione dell'Ente.
+* *Peppol -> NoTI-ER -> ufficio*: la [underline]#notifica MDN#, che attesta l'avvenuta ricezione o meno del
+documento da parte dell'Access Point ricevente, viene messa a disposizione dell'Ente in formato UBL.
+* *NSO -> NoTI-ER -> ufficio*: è il caso di [underline]#ricevuta di consegna o notifica di scarto# che
+attesta l'esito di validazione dell'ordine da parte di NSO, messa a disposizione in formato _fatturaPA_.
+
+==== Fase iniziale di invio documento
+
+Quando un ufficio invia a NoTI-ER un documento in formato UBL, qualunque esso sia,
+si innesca il processo schematizzato dall'immagine seguente.
+
+.sequenza di invio documento nel processo di CA
+image::images\7.Processi_di_e-Procurement-91b27.png[]
+
+La fase di *invio* è una *fase SINCRONA* in cui:
+[start=1]
+. l'Ente che invia documenti a NoTI-ER si autentica allegando il proprio certificato
+client alla chiamata; in questa sede, NoTI-ER effettua i controlli di congruenza tra
+il mittente e il certificato fornito e ne verifica l'autorizzazione a processare l'invio documentale.
+. NoTI-ER verifica la correttezza e la congruenza dei metadati associati al documento, oggetto d'invio,
+a seconda della tipologia del flusso innescato proprio dalla configurazione dei metadati forniti in ingresso.
+. NoTI-ER verifica che il documento non corrisponda ad un'occorrenza già presente all'interno del sistema, in
+base al valore della sua chiave logica; nel caso in cui venga riscontrata una corrispondenza, il sistema procede
+a valutare la possibilità di sovrascrivere il documento già presente.
+. NoTI-ER effettua la validazione strutturale (XSD) e semantica (XSL, schematron) sul documento.
+. In caso affermativo si procede all'acquisizione del documento, salvandolo nel sistema e
+notificano il risultato positivo dell'elaborazione inviando la chiave URN del documento acquisito.
+
+Se uno qualunque dei passi in sequenza fallisce (es. il documento non supera la validazione),
+NoTI-ER interrompe l’elaborazione dei passi successivi, componendo un esito negativo riportante il dettaglio
+dell’anomalia e restituendolo all’ufficio client.
+
+=====
+.Versionamento e sovrascrittura di un documento
+Per far sì che un documento già presente in NoTI-ER possa essere sovrascritto, è necessario
+che si verifichi una delle seguenti precondizioni:
+
+* il documento risulta *scartato* a seguito della ricezione di una _notifica di scarto_;
+* il documento risulta *rifiutato dal destinatario* a seguito della ricezione di una _notifica
+di esito cedente_    con esito negativo;
+* il documento risulta *rifiutato dal mittente*, nel caso di _approvazione manuale_ dell'ufficio.
+
+Inoltre, al momento dell'invio del documento in sostituzione, è necessario che venga valorizzato
+a _true_ l'apposito flag dei metadati footnote:[<AccettaChiaveDuplicata>] che abilita la sovrascrittura
+dell'URN già esistente.
+[WARNING]
+====
+Tutti i documenti principali possono essere versionati, ad accezione degli ordini UBL BIS 3.0. inviati
+verso NSO, poiché quest'ultimo non ne accetta la sovrascrittura.
+====
+=====
+==== Fase di elaborazione del documento
+
+Se l'invio verso rete Peppol e verso NSO non richiede di soffermarsi in questa fase, le fatture e le note di credito
+che devono essere indirizzate verso il _Sistema di Interscambio_ subiscono il seguente processo.
+
+.sequenza di elaborazione dei documenti di CA da inoltrare a SdI
+image::images\7.Processi_di_e-Procurement-ebcd8.png[]
+
+La fase di *elaborazione* è una *fase ASINCRONA* in cui:
+[start=1]
+. NoTI-ER effettua la transcodifica, tramite apposito convertitore, dal formato UBL BIS 2.1. di arrivo
+a quello _FatturaPA_ di destinazione.
+. NoTI-ER effettua la sola validazione XSD del risultato della conversione e se l'esito è positivo salva il nuovo formato.
+. Intercent-ER, tramite contatto remoto con NoTI-ER, firma digitalmente il documento in _fatturaPa_.
+. Nel caso in cui non sia stata attivata la modalità di _approvazione automatica_, il documento trasformato e firmato viene posto alla verifica
+dell'ufficio emittente, che procede ad approvare o scartare manualmente lo stesso, prima dell'invio a SdI.
+
+==== Fase di trasmissione del documento
+
+In questa fase, NoTI-ER invia il documento al sistema scelto. +
+In generale, la trasmissione è una *fase SINCRONA* in cui NoTI-ER effettua le operazioni
+sotto descritte.
+
+.Invio di fatture e note di credito a SdI
+[start=1]
+. prepara i metadati previsti dalle _specifiche tecniche SdI_;
+. invia il documento in formato _fatturaPA_ firmato a SdI;
+. salva la risposta sincrona che SdI invia, attraverso i quali viene comunicato
+anche l'_identificativo SdI_ del documento.
+
+.Invio di ordini BIS 3.0. a NSO
+[start=1]
+. compone il file SBD completo, partendo dai metadati di invio e dal documento ricevuti;
+. invia il file ad NSO;
+. salva la risposta sincrona che SdI invia, attraverso i quali viene comunicato
+anche l'_identificativo NSO_ del documento.
+
+.Invio di ordini e DDT su rete Peppol
+[start=1]
+. compone il file SBD completo, partendo dai metadati di invio e dal documento ricevuti;
+. invia il file su rete Peppol;
+. salva la risposta sincrona che l'Access Point ricevente inviafootnote:[chiamata MDN, dalla quale si parte per costruire la _notifica MDN_ associata.],
+dalla quale si estrapola l'esito positivo di avvenuta ricezione o gli eventuali errori nel transito.
+
+[NOTE]
+====
+il file *SBD* (*Standard business Document*), che NoTI-ER compone prima predisporre l'invio a NSO e su rete Peppol,
+è una sorta di _busta di trasmissione_ XML formata da:
+
+* *SBDH* (Standard Business Document Header): è l'intestazione della busta che viene costruita a partire dai metadati di invio e contiene le informazioni
+sul tipo di documento, soggetto mittente e sogetto destinatario.
+* *Payload*: è il corpo XML del documento vero e proprio.
+====
+
+==== Fase di gestione del flusso dei messaggi
+
+Contestualmente all'invio di documenti, come abbiamo visto, è necessario gestire il flusso
+di notifiche proveniente dai vari sistemi. +
+NoTI-ER mette a disposizione dell'ufficio mittente del documento principale, le seguenti classi di messaggi:
+
+* *notifiche SdI*: sono tutte le notifiche provenienti da SdI e collegate ad un documento _fattura_ o _nota di credito_ (l'_identificativo SdI_ è testimone del legame);
+* *notifiche NSO*: sono, essenzialmente, la _ricevuta di consegna_ e la _notifica di scarto_, che danno evidenza dell'esito dell'operazione di validazione effettuata da NSO
+sull'ordine imputato (anche quì, l'_idetificativo nso_ accerta il lagame fra ordine e notifica);
+* *notifiche Peppol*: sono le _notifiche MDN_ che NoTI-ER costruisce sulla base del messaggio MDN ricevuta dall'Access Point ricevente, che attestano l'avvenuta presa in carico o meno del documento, e che
+sono messe a disposizione dell'ufficio interessato.
+
+La ricezione da parte di NoTI-ER di queste notifiche è una *fase complessivamente ASINCRONA* per quel che riguarda
+la ricezione lato SdI ed NSO, mentre è *SINCRONA* per quanto concerne la comunicazione con Peppol. +
+In ogni caso, NoTI-ER salva le _notifiche_ generando la relativa _chiave logica_ e le associa al documento principale.
+
+
+==== Fase di recupero [[anchor-1]]
+
+La fase in cui l'ufficio mittente del documento principale recupera i documenti correlati può
+essere schematizzata come seguefootnote:[si consideri che questo processo è del tutto analago al recupero dei documenti principali ricevuti nel Ciclo Passivo (Inbound Process).].
+
+.sequenza di recupero documenti
+image::images\7.Processi_di_e-Procurement-36f49.png[]
+
+Il recupero vero e proprio (puntuale) del documento avviene tramite l'utilizzo del servizio RESTfootnote:[per approfondire l'utilizzo dei servizi REST, si rimanda al documento _NoTI-ER, specifiche tecniche dei servizi_.] _recupero documento_ esposto da NoTI-ER,
+ma la procedura completa per recuperare in massa i documenti può essere descritta nei seguenti punti:
+[start=1]
+. l'ufficio chiede a NoTi-ER la lista di tutti i documenti di suo interesse, utilizzando il servizio REST _recupero lista_;
+. NoTI-ER verifica che la _Request_ sia formalmente corretta e che il chiamante disponga delle autorizzazioni necessarie per ricevere le informazioni di cui fa richiesta;
+. NoTI-ER recupera tutti i documenti corrispondenti ai parametri di filtro inseriti nella richiesta (verosimilmente, si invocherà il servizio per ricevere la lista dei documenti in stato _da recapitare_);
+. NoTI-ER risponde con la lista completa di tutti i documenti richiesti, nella quale è specificato, in particolare,
+l'URN dei singoli documenti, da utilizzare per il recupero puntuale;
+. utilizzando il servizio _recupero documento_, l'ufficio specifica l'URN del documento che vuole ricevere;
+. NoTI-ER restituisce il file XML richiesto, recapitando difatto il documento all'utilizzatore finale.
+
+[NOTE]
+====
+Procedura analoga, sia per il recupero lista che per il recupero documento, può anche essere eseguita da interfaccia Web, attraverso l'utilizzo di apposite funzioni descritte nei capitoli successivi. +
+Rimane comunque evidente che, per la mole elevata di documenti con cui gli uffici hanno quotidianamente a che fare, l'utilizzo dei servizi REST esposti da NoTI-ER risulta la metodologia di lavoro
+che meglio si adatta alle esigenze delle parti, garantendo maggiore efficienza, autonomia e integrazione.
+====
+
+[[anchor-3]]
+==== Fase di conservazione
+
+Il versamento in conservazione di un documento principale, e dei documenti correlati per soluzione di integrità,
+avviene attraverso la composizione di un' *Unità Documentaria*.
+
+Le pre-condizioni per poter procedere al versamento in conservazioni sono:
+
+* il versamento deve essere stato espressamente richiesto dall'ufficio mittente in fase di invio, valorizzando a _true_ l'apposito flag
+nei metadatifootnote:[<InvioConservazione>];
+* il documento deve essere stato inviato verso il sistema destinatario, ricevendo massaggi di notifica;
+* il documento non deve trovarsi in stato SCARTATO al momento dell'invio in conservazione.
+
+In prima istanza, NoTI-ER esegue un primo versamento dell'_unità documentaria_, contenente il *_documento principale_*,
+secondo le fasi presentate in figura sottostante. +
+Da tenere in considerazione che, nel caso in cui il documento sia del *flusso di SdI*, vengono versati in questa prima fase sia
+il documento _fatturaPA_ firmato CAdES (come documento principale) sia il formato originale in UBL (in qualità di annesso al documento principale)
+
+
+.sequenza di versamento del documento principale
+image::images\7.Processi_di_e-Procurement-ed9b3.png[]
+
+In sequenza, le operazioni che NoTI-ER effettua sono:
+[start=1]
+. si recuperano i dati di *integrazione fiscale* footnote:[per il processo di Outbound, l'integrazione fiscale viene effettuata in autonomia da NoTI-ER, in quanto gli estremi fiscali sono descritti nei metadati di invio del documento, rendendo non necessaria l'implementazione di una fase di integrazione fiscale da parte dell'ufficio emittente.] richiesti da ParER per comporre
+l'_unità documentaria_;
+. si inserisce il documento principale;
+. se flusso di SdI, si inserisce il documento in formato _fatturaPA firmato_;
+. si esegue il versamento in ParER;
+. si salva l'*esito* ricevuto come nuovo documento, associandolo al documento principale.
+
+Per quanto riguarda il versamento dei *_documenti correlati_* (le _notifiche_), questo avviene solamente se il
+documento principale è già stato versato ricevendo un _esito di versamento positivo_. +
+A questo punto, NoTI-ER esegue il versamento delle notifiche, in qualità di annessi al documento principale, salvando
+i nuovi esiti di versamento per ogni documento correlato come nuovo documento.
+
+.sequenza di versamento dei documenti correlati
+image::images\7.Processi_di_e-Procurement-98420.png[]
+
+[NOTE]
+====
+Il processo di versamento a ParER è schedulato quotidianamente in NoTI-ER. +
+Con cadenza quotidiana, si predispone l'invio in conservazione di tutti quei documenti che sono già presenti in NoTI-ER da 60 giorni e sono
+in attesa di essere versati.
+====
+
+[NOTE]
+====
+Può accadere che un documento principale, che abbia già terminato il suo ciclo di vita e che sia già stato versato in conservazione con esito positivo,
+venga sovrascritto dall'utente. +
+In questo caso, NoTI-ER implementa una procedura automatica che, al momento del versionamento, innesca l'annullamento della conservazione per il documento che
+viene sovrascritto, in modo tale da predisporre il nuovo flusso per la nuova istanza.
+====
+
+=== Processi di Inbound e Ciclo Passivo
+Per convenzione, si considera il processo di Inbound come l'insieme di
+tutte le fasi che seguono la ricezione in NoTI-ER di un documento principale.
+
+Il processo di Inbound assume due forme:
+
+* *ricezione SdI*: comprende le attività di transcodifica, recupero, integrazione e versamento ParER del
+documento principale e delle notifiche correlate;
+* *ricezione Peppol*: il documento viene immediatamente reso disponibile per il recupero
+all'ufficio destinatario.
+
+A seguito della ricezione di documenti principali provenienti da SdI, l'_ufficio_ potrà in seguito recuperare
+tutte le notifiche correlate ed inviare, eventualmente, una _notifica di esito committente_.
+
+I *flussi* compresi in questo processo di cui i documenti che ne prendono parte vengono classificati come documenti di *Ciclo Passivo*, sono:
+
+* *SdI -> NoTI-ER -> ufficio*: _fatture_ e _note di credito_ giungono a NoTI-ER in formato _fatturaPA_, prima di essere convertite
+in UBL e messa a disposizione dell'ufficio ricevente. Allo stesso modo, la _notifica di decorrenza termini_ giunge a NoTI-ER da SdI, ma viene
+messa a disposizione dell'ufficio direttamente in formato _fatturaPA_, senza effettuare conversioni, così come avviene per tutte le notifiche del ciclo attivo.
+* *Peppol -> NoTI-ER -> ufficio*: _ordini_ e _documenti di trasporto_ giungono a NoTI-ER (terzo corner dell'infrastruttura da Peppol) dall'Access Point mittente, per essere
+messi a disposzione dell'ufficio destinatario.
+* *ParER -> NoTI-ER -> ufficio*: è il caso della _notifica di esito conservazione_ con cui ParER comunica il risultato del versamento.
+
+==== Fase di ricezione del  documento
+
+In questa fase, NoTI-ER riceve un documento principale da SdI o da Peppol.
+Mentre la ricezione lato Peppol è lineare, nel caso di SdI avvengono le operazioni delineate in figura.
+
+.sequenza di ricezione documento da SdI
+image::images\7.Processi_di_e-Procurement-83b77.png[]
+
+La ricezione è una *fase ASINCRONA* in cui:
+[start=1]
+. SdI invia una busta contentente il documento e i metadati in formato _fatturaPA_, tramite il servizio _RiceviFile_;
+. NoTI-ER elabora  il pervenuto da SdI estraendo quanto presente in busta;
+. NoTI-ER identifica i due soggetti coinvolti:
+.. il _destinatario_, tramite il codice IPA specificato all'interno dei metadati e della fattura;
+.. il _mittente_, tramite uno degli identificativi presenti (Codice Fiscale o Partita Iva) e, nel caso in cui non si trovi corrispondenza con quanto presente in anagrafica attuale,
+si procede a censire una nuova istanza;
+. NoTI-ER elabora la _chiave_ del documento ricevuto, verificandone l'univocità. Nel caso in cui la chiave sia già presente a sistema e lo stato del documento permetta la sovrascrittura, si innesca il meccanismo del versionamento;
+. NoTI-ER effettua le operazioni di salvataggio del _documento principale_, in formato _fatturaPA_ firmato e in formato UBL, e dei _metadati file fattura_.
+
+=====
+.Versionamento e sovrascrittura del documento
+Affinchè un documento di Ciclo Passivo possa essere sovrascritto, è necessario che l'ufficio destinatario
+abbia già emesso una *_notifica di esito committente_ con esito negativo* e la stessa notifica sia stata correttamente
+processata dal Sistema di Interscambio (ovvero, che non si sia ricevuto una _notifica di scarto di esito committente_).
+=====
+
+==== Fase di elaborazione del documento
+
+In questa fase avviene la transcodifica dal formato _fatturaPA_ al formato UBL, solamente in relazione al flusso di SdI, e
+la validazione del documento UBL, per tutti i documenti principali (XSD e SCH).
+
+.sequenza di elaborazione dei documenti del flusso di SdI
+image::images\7.Processi_di_e-Procurement-94aba.png[]
+
+
+[NOTE]
+====
+Nel caso in cui un documento non superi la validazione XSD o la validazione Schematron, che sono sequenziali,
+assume uno stato intermedio. In questa eventualità, l'ufficio destinatario può comunque decidere di prendersi in carico il documento,
+nonostante si tratti di file non del tutto conformi alle regole di validazioni attuali.
+====
+
+==== Fase di recupero del documento
+
+In questa fase, l'ufficio destinatario recupera tutti i documenti a lui diretti, compresi i correlati. +
+La sequenza di recupero e le operazioni che devono effettuartsi sono del tutto analoghe a quanto
+descritto in <<anchor-1, fase di recupero dei documenti di outbound.>>
+
+
+[[anchor-2]]
+==== Fase di Integrazione Fiscale
+
+Mentre nei processi di outbound i *dati di integrazione fiscale* richiesti da ParER vengono estratti in autonomia,
+nei processi di inbound è l'ufficio stesso ad inviarli a NoTI-ER footnote:[per i documenti di CP devono essere forniti i dati contabili di registrazione del documento nel sistema dell'ufficio committente.],
+utilizzando un servizio detto di *integrazione*. +
+Per poter effettuare  l'integrazione di un documento, *l'ufficio deve aver precedentemente effettuato
+il recupero dello stesso*. Inoltre, l'ufficio committente può effettuare l'integrazione  di un documento una sola volta.
+
+.sequenza di integrazione dei dati fiscali nel processo di inbound
+image::images\7.Processi_di_e-Procurement-ec289.png[]
+
+L'integrazione è una *fase SINCRONA* in cui avvengono le seguenti operazioni:
+[start=1]
+. l'ufficio committente invia a NoTI-ER i dati di integrazione previsti, tramite l'utilizzo del
+servizio REST esposto, in riferimento ad una specifica _fattura/NdC_;
+. NoTI-ER verifica che le autorizzazioni dell'ufficio siano compatibili con la richiesta ricevuta;
+. NoTI-ER verifica che lo stato del documento in esame permetta l'integrazione;
+. NoTI-ER salva i dati di integrazione fiscale ricevuti.
+
+[NOTE]
+====
+Si noti come la fase di integrazione fiscale è prevista solo per i documenti afferenti al flusso di SdI. +
+Gli unici documenti che necessitano di integrazione fiscale sono, dunque, *fatture* e *note di credito* del processo di Inbound.
+====
+
+==== Fase di conservazione del documento
+
+Come già descritto per il processo di outbound, in questa fase NoTI-ER esegue il versamento su ParER del documento principale e dei documenti correlati. +
+Il versamento avviene tramite composizione di *unità documentaria* composta dal documento e dagli eventuali annessi.
+
+Con riferimento al flusso di Peppol, gli ordini e i documenti di trasporto non devono essere registrati fiscalmentefootnote:[difatti questi documenti non necessitano di una fase di integrazione fiscale.] e la conservazione
+avviene, per convenzione, su dei registri dedicati. +
+Per quanto riguarda il flusso di SdI, invece, le fatture e le note di credito vengono versate su dei registri specifici, dei quali è necessario acquisire i riferimenti tramite la fase di <<anchor-2, integrazione dai dati fiscali.>>
+
+Le fasi del processo di conservazione per i documenti di Inbound sono analoghe a quelle descritte in <<anchor-3, fase di conservazione per i processi di Outbound>>. +
+In particolare, NoTI-ER esegue il versamento del *documento principale* (per il flusso di SdI, previa integrazione dei dati fiscali) con eventuali annessi (formati originali).  +
+In seguito, se il documento principale riceve un esito di versamento positivo, si procede al versamento delle notifiche ricevute dal _flusso dei messaggi_ corrispondente.
+
+==== Invio di notifiche di esito committente
+Al ricevimento di _fatture_ e _note di credito_ l'ufficio committente invia a NoTI-ER un esito di accettazione/rifiuto che
+si tramuta nella costruzione di una *notifica di esito committente*. +
+Questo genere di notifica è a tutti gli effetti un *documento* che viene gestito come gli altri, prevedendo una fase di invio, di trasmissione e di gestione del flusso
+dei messaggi risultante.
+
+.sequenza di invio di notifiche di esito committente
+image::images\7.Processi_di_e-Procurement-bcfd6.png[]
+
+L'invio di un documento in questa fase, segue il processo seguente:
+[start=1]
+. l'ufficio predispone l'invio del documento;
+. NoTI-ER riceve la richiesta e verifica la compatibilità con le autorizzazioni dell'ufficio;
+. NoTI-ER verifica che la _notifica_ sia correttamente associata alla _fattura/nota di credito_, tramite verifica dell'_identificativo SdI_;
+. a seconda del contenuto della notifica, NoTI-ER provvede a impostare come _scartato_ o _approvato_ il documento principale corrispondente,
+. NoTI-ER salva la _notifica di esito committente_ e la avvia alla trasmissione verso SdI, senza effettuare alcuna elaborazione ulteriore.
+
+Questa circostanza è l'unica per la quale SdI prevede una *gestione sincrona di trasmissione di notifica*. +
+Infatti, una volta ricevuta la _notifica di esito committente_, SdI fa le sue valutazioni e, nel caso in cui non la
+ritenga valida, invia in risposta una *notifica di scarto di esito committente*, che viene salvata da NoTI-ER come nuovo documento footnote:[secondo le logiche di creazione di URN specificate al <<anchor-4, paragrafo 6.1.>>], correlato al principale originale (_fattura/NdC_).
