@@ -1,0 +1,228 @@
+== Interfaccia Web (((10.Interfaccia Web)))
+
+L'interfaccia web è la seconda modalità che NoTI-ER mette a disposizione per l'integrazione lato client, oltre ai servizi. +
+Le funzionalità presenti in interfaccia sono state sviluppate con l'obiettivo di offrire una modalità di _monitoraggio dei documenti_
+in transito su NoTI-ER e implementare una gestione dei componenti in base alla profilazione utente.
+
+=== Architettura
+
+L'interfaccia Web di NoTI-ER è stata progettata per essere:
+
+* *responsive*, adattando dinamicamente il suo layout a tutte le tipologie di client web,
+compresi dispositivi mobili;
+* *compatibile* con vari browser;
+* *facilmente navigabile*, mostrando oltre al classico menu superiore anche il
+il breadcrumbs sempre navigabile;
+* *accessibile* secondo gli standard di accesibilità previsti dalla Regione Emilia-Romagna. footnote:[si vede il sito http://www.regione.emilia-romagna.it/accessibility-info]
+
+=== Sicurezza
+
+Analogamente ai servizi esposti, anche l'interfaccia Web di NoTI-ER è accessibile esclusivamente
+su _protocollo HTTPS_ footnote:[l'autenticazione è garantita da un certificato digitale delle Regione Emilia-Romagna.], pur non richiedendo la _client authentication con certificato digitale_.
+
+Le pratice di accesso all'interfaccia sono del tutto indipendenti rispetto a quelle
+già viste per l'autenticazione ai servizi. Pur essendo raggiungibile allo stesso URL, l'interfaccia
+permette l'accesso in base al classico meccanismo di autenticazione e autorizzazione con *username* e *password*.  +
+Username e password vengono generati e comunicati all'utente web in fase di creazione dell'utenza.
+Gli username vengono costruiti secondo una logica che ne permette di garantire l'univocità e la password è modificabile
+secondo le preferenze dell'utente footnote:[rispettando i vincoli imposti dal rispetto dei requisiti di sicurezza delle password.]
+
+=== Utente Web
+
+Un *utente web* è l'unico attore client deputato ad operare sull'interfaccia Web offerta da NoTI-ER. +
+Un'utenza viene creata in fase di accreditamento di un'organizzazione o su richiesta specifica in un secondo momento.
+
+L'utente accede ai documenti in transito e ai vari servizi offerti in base ad una _relazione associativa con i soggetti (intesi come uffici) al quale lo stesso utente è assegnato_.
+In altre parole, un'utenza ha visibilità sui documenti degli uffici ai quali è stato associato in fase di accreditamento. +
+In tal senso, NoTI-ER non pone vincoli di associazione, pertanto:
+
+* un utente può essere associato a più soggetti (uffici);
+* un utente può essere associato a soggetti di diverse organizzazioni;
+* un ufficio può essere associato a più utenti.
+
+=== Funzioni e ruoli
+
+L'interfaccia web si suddivide in varie funzioni (esplicitate dal menu della pagina) e, affinché si possa operare su ognuna di esse, all'utente
+vengono assegnati dei ruoli ai quali corrispondono dei permessi specifici. Dunque, *un utente web è associato ad almeno un ruolo*. +
+I ruoli disponibili sono:
+
+* Amministrazione;
+* Gestione Fogli di Stile;
+* Gestione Bacheca Notizie;
+* Gestione SMP;
+* Gestione Anagrafica Ruoli;
+* Gestione Anagrafica;
+* Approvazione Documenti;
+* Accettazione/Rifiuto Fatture/NC;
+* Visualizzazione e operazioni su notifiche NSO;
+* Conservazione;
+* Reportistica;
+* Reinvio Ordini e DDT;
+* Notifiche Admin;
+* Notifiche documenti bloccati;
+* Utente web;
+* Utente NSO;
+* Base.
+
+A ognuno di questi ruoli sono associati dei permessi che abilitano l'utente ad affettuare specifiche operazioni, in linea con quanto descritto dalle caratteristiche del ruolo stesso.
+
+=== Accreditamento
+
+*La profilazione* utente avviene in fase di accreditamento dello stesso e può essere modificata facendo richiesta tramite i canali predisposti da Intercenter. footnote:[https://intercenter.regione.emilia-romagna.it/noti-er-fatturazione-elettronica/registrati-a-noti-er]. +
+L'inserimento di un nuovo utente a sistema può avvenire direttamente da interfaccia ed è un'azione che può essere effettuata da chi possiede almeno il ruolo di Gestione Anagrafica. +
+A seguito dell'inserimento dei dati e, quindi, dell'accreditamento dell'utente, NoTI-ER esegue quanto descritto:
+
+. invia una mail automatica all'indirizzo di posta elettronica fornito con l'indicazione dei ruoli e lo username footnote:[della forma *_nome.cognome_*.] associati all'utente;
+. invia una seconda mail automatica con indicata una password temporanea generata dal sistema, la quale dovrà essere cambiata una volta effettuato al primo accesso.
+
+=== Navigazione dalla _Home_ di NoTI-ER
+
+Raggiunta la pagina di login footnote:[https://notier.regione.emilia-romagna.it/notier/login.html] è possibile accedere a NoTI-ER utilizzando le credenziali in possesso o richiedere una nuova password in caso di dimenticanza. +
+Se il login viene effettuato correttamente, si viene reindirizzati alla _Home_ di NoTI-ER dove comparirà in alto il menu per accedere alle varie funzioni rese disponibili. +
+Come già accennato, *la possibilità di accedere a determinate funzioni dipende strettamente dai ruoli posseduti dall'utente autenticato*. +
+Tenendo presente questo, di seguito è riportato l'elenco che descrive la totalità delle funzioni disponibili in interfaccia.
+
+.Funzioni presenti in interfaccia NoTI-ER.
+[width="95%",cols="",^,^,^,^,^">,options="header,footer"]
+|===
+^.^|Gestione Documenti ^.^|Anagrafica ^.^|Peppol ^.^|Gestione ^.^| Reportistica ^.^|Amministrazione
+^.^| Monitoraggio Documenti
+
+ Documenti da Versare
+
+Approva Documenti
+
+Firma Documenti ^.^|
+
+Organizzazioni +
+(cerca e crea)
+
+Uffici +
+(cerca e crea)
+
+Utenti +
+(cerca e crea)
+
+Ruoli +
+(cerca e crea) ^.^|
+
+Cerca Participant ID PEPPOL
+
+Cerca Participant ID PEPPOL su SATER
+
+Lookup Participant ID ^.^|
+
+Fogli Stile +
+(cerca e carica)
+
+SMP +
+(gestione identificatori)
+
+Notizie +
+(cerca e crea)  ^.^|
+
+Conteggio Documenti
+
+Conteggio Notifiche
+
+Stato Documenti
+
+Conteggio Organizzazioni
+
+Elenchi Anagrafici +
+(organizzazioni e uffici)
+
+Monitoraggio Conservazione +
+(riepilogo, documenti da integrare, documenti in errore) ^.^|
+
+Documenti in Lavorazione
+
+Job monitoring
+
+Configurazione NoTIER
+
+||||||
+|===
+
+
+[CAUTION]
+
+====
+Inoltre, per chi possiede il ruolo specifico (in generale, i referenti delle organizzazioni) è possibile accedere dal menu anche alle notifiche di ordini e DDT bloccati su Peppol o da NSO.
+Accedendo a tale funzione (rapresentata da una fiammella con indicato il numero di documenti dell'organizzazione interessati) è possibile, non solo verificare puntualmente quali
+siano gli ordini che hanno problemi di invio, ma anche agire su di essi, re-inviandoli o invalidandoli puntualmente o in maniera massiva.
+====
+
+=== Monitoraggio Documenti
+
+La funzione principale esposta nell'interfaccia di NoTI-ER è quella del _Monitoraggio Documenti_, raggiungibile attraverso il menu _Gestione Documenti_. +
+Questa consente agli utenti di verificare lo stato dei documenti in transito su NoTI-ER e di eseguire azioni che impattano sul loro ciclo di vita.
+
+L'ambito di manovra dell'utente consiste *in tutti e i soli documenti emessi o destinati ai soggetti ai quali l'utente stesso è associato*.
+
+Relativamente alla ricerca dei documenti di interesse, vale quanto segue:
+
+* il dominio di ricerca è suddiviso a livello funzionale a seconda del ciclo di riferimento. Pertanto, il monitoraggio è composto da due
+sottofunzioni distinte e complementari: *il monitoraggio sui documenti inviati e quello sui documenti ricevuti*;
+* a prescindere dal ciclo, *il dominio di ricerca consiste solo nei documenti principali*. I documenti correlati sono visualizzabili
+a partire dal dettaglio del documento principale.
+
+==== Ricerca dei documenti
+
+La funzione di monitoraggio si apre sulla pagina di ricerca dei documenti. In questa sezione, è possibile inserire i filtri di interesse per la ricerca dei documenti, in maniera
+tale da velocizzarne l'individuazione. +
+I filtri utilizzabili sono quelli riportati nell'immagine sottostante e sono riassumibili in:
+
+* *Ente*: si seleziona l'organizzazione di interesse, fra quelle disponibili;
+* *Ufficio*: si selezione l'ufficio di interesse, fra quelli disponibili;
+* *URN/Numero Documento*: è possibile digitare il numero del documento che si vuole ricercare o direttamente l'urn.
+* *destinatario*: si può cercare codice fiscale, partita iva o nome del destinatario del documento (o del mittente nel caso dei documenti ricevuti);
+* *tipo documento*: selezione fra i quattro tipi di documento principale (compresa la selezione multipla);
+* *stato documento*: selezione fra tutti i possibili stati del documento (compresa la selezione multipla);
+* *inviato a NSO*: disponibile solo per i documenti inviati, è possibile selezionare i documenti inviati a NSO, non inviati a NSO o tutti;
+* *identificativi NSO*: disponibile solo per i documenti inviati, è possibile filtrare per specifici identificativi NSO (se ricerca multipla, è necessario usare la virgola fra un identificativo e un altro);
+* #*cerca anche tra gli eliminati*: se spuntato, permette di ricercare anche fra i documenti eliminati logicamente.#
+* *data ricezione NoTI-ER*: si può filtrare per range temporale di ricezione del documento in NoTI-ER;
+* *data invio*: si può filtrare per la data di invio del documento da parte di NoTI-ER, solo per i documenti inviati.
+
+.maschera di ricerca documenti
+image::images\10.Interfaccia_Web-16d2d.png[]
+
+Una volta inseriti i filtri, agendo sul tasto "Rierca" viene elaborata la richiesta e, una volta completata, viene restituita una lista di tutti i documenti
+che rispecchiano i parametri inseriti.
+L'immagina seguente mostra un esempio di lista documenti restituita a seguito di una ricerca mirata.
+
+
+.esempio di visualizzazione lista documenti dalla pagina del monitoraggio
+image::images\10.Interfaccia_Web-d5c3d.png[]
+
+==== Metastati
+Il ciclo di vita di un documento in NoTI-ER è costituito dall'insieme di tutte le transizioni di stato e delle relative sessioni footnote:[vedi il <<anchor-7, capitolo 8. Processi applicativi.>> ].
+Dunque, un documento può essere caratterizzato da un'ampia collezione di valori di stato. +
+Per rendere più intuitivo l'utilizzo della funzione di monitoraggio e consentire all'utente un'immediata comprensione dello stato del documento, è stato introdotto il concetto di _metastato_.
+
+Un *metastato* riassume in un unico valore l'insieme degli stati del documentoe di quelli delle sessioni validi in uno specifico momento del suo ciclo di vita. +
+Contestualmente, anche la rappresentazione delle varie fasi del flusso è semplificata, in modo da riferire i valori dei metastati a tre contesti semanticamente significativi del ciclo di vita:
+
+* *invio/ricezione*: metastati del documento che descrivono le fasi di transito delo stesso, in riferimento all'interazione con SdI e Peppol.
+* *esito*: metastati che descrivono le fasi successive al transito, strettamente legati alla ricezione di notifiche da parte di SdI e NSO. Da qui è possibile verificare l'accettazione o il rifiuto di fatture e note di credito, così come
+la validazione o lo scarto di ordini inviati ad NSO.
+* *versamento*: metastati che descrivono le fasi di invio in conservazione del documento e l'esito della procedura di versamento.
+
+Ogni metastatato è associato ad una specifica icona, visualizzata nella maschera dei risultati della funzione di monitoraggio. In particolare,
+nella lista dei documenti, a capo della colonna stato, sono riportate un massimo di tre metastati che descrivono la situazione del documento in termini di esito di invio/ricezione, esito di validazione/accettazione, esito di conservazione.
+
+Si rimanda al #manuale di monitoraggio NoTI-ER# per la spiegazione e il dettaglio di tutti i metastati possibili.
+
+
+==== Dettaglio del documento
+
+Agendo sull'apposito tasto della lista documenti, in riferimento alla colonna _dettaglio_, si accede alle specifiche del documento. +
+Da questa sezione, oltre a rilevare informazioni generali sul documento (urn, tipo documento, numero, soggetto mittente e destinatario, anno e date di interesse), è possibile
+scaricare le versioni XML del file disponibili e attuare azioni sul transito. +
+Nella figura sottostante è riportato un esempio di dettaglio documento.
+
+.esempio di visualizzazione "dettaglio documento"
+image::images\10.Interfaccia_Web-52a68.png[]
+
+In corrispondenza della sezione _file_
