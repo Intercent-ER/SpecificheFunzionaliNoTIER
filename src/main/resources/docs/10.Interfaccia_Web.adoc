@@ -1,4 +1,4 @@
-== Interfaccia Web (((10.Interfaccia Web)))
+|== Interfaccia Web (((10.Interfaccia Web)))
 
 L'interfaccia web è la seconda modalità che NoTI-ER mette a disposizione per l'integrazione lato client, oltre ai servizi. +
 Le funzionalità presenti in interfaccia sono state sviluppate con l'obiettivo di offrire una modalità di _monitoraggio dei documenti_
@@ -25,12 +25,12 @@ già viste per l'autenticazione ai servizi. Pur essendo raggiungibile allo stess
 permette l'accesso in base al classico meccanismo di autenticazione e autorizzazione con *username* e *password*.  +
 Username e password vengono generati e comunicati all'utente web in fase di creazione dell'utenza.
 Gli username vengono costruiti secondo una logica che ne permette di garantire l'univocità e la password è modificabile
-secondo le preferenze dell'utente footnote:[rispettando i vincoli imposti dal rispetto dei requisiti di sicurezza delle password.]
+secondo le preferenze dell'utente footnote:[rispettando i vincoli imposti dal rispetto dei requisiti di sicurezza delle password.].
 
 === Utente Web
 
-Un *utente web* è l'unico attore client deputato ad operare sull'interfaccia Web offerta da NoTI-ER. +
-Un'utenza viene creata in fase di accreditamento di un'organizzazione o su richiesta specifica in un secondo momento.
+Un *utente web* è l'unico attore client deputato ad operare sull'interfaccia Web NoTI-ER. +
+Un'utenza viene creata in fase di accreditamento di un'organizzazione o su richiesta specifica di un secondo momento.
 
 L'utente accede ai documenti in transito e ai vari servizi offerti in base ad una _relazione associativa con i soggetti (intesi come uffici) al quale lo stesso utente è assegnato_.
 In altre parole, un'utenza ha visibilità sui documenti degli uffici ai quali è stato associato in fase di accreditamento. +
@@ -44,27 +44,108 @@ In tal senso, NoTI-ER non pone vincoli di associazione, pertanto:
 
 L'interfaccia web si suddivide in varie funzioni (esplicitate dal menu della pagina) e, affinché si possa operare su ognuna di esse, all'utente
 vengono assegnati dei ruoli ai quali corrispondono dei permessi specifici. Dunque, *un utente web è associato ad almeno un ruolo*. +
-I ruoli disponibili sono:
+I ruoli disponibili e i relativi permessi associati sono, in ordine di privilegi descrescenti:
 
-* Amministrazione;
-* Gestione Fogli di Stile;
-* Gestione Bacheca Notizie;
-* Gestione SMP;
-* Gestione Anagrafica Ruoli;
-* Gestione Anagrafica;
-* Approvazione Documenti;
-* Accettazione/Rifiuto Fatture/NC;
-* Visualizzazione e operazioni su notifiche NSO;
-* Conservazione;
-* Reportistica;
-* Reinvio Ordini e DDT;
-* Notifiche Admin;
-* Notifiche documenti bloccati;
-* Utente web;
-* Utente NSO;
-* Base.
-
-A ognuno di questi ruoli sono associati dei permessi che abilitano l'utente ad affettuare specifiche operazioni, in linea con quanto descritto dalle caratteristiche del ruolo stesso.
+.Ruoli di NoTI-ER e Permessi associati.
+[width="100%",cols=",">,options="header,footer"]
+|===
+^.^s|Ruolo ^.^s|Permesso
+1.20+.^s| Amministrazione
+|Permesso per eseguire la lookup di un participant Identifier su rete PEPPOL
+|Permesso per visualizzare le notifiche dei documenti NSO in errore
+|Permesso di effettuare il reinvio verso NSO da interfaccia
+|Permesso per accesso pagina di reportistica Conservazione - Riepilogo
+|Permesso per accesso pagina di reportistica Conservazione - Documenti in Errore Versameto
+|Permesso per accesso pagina di reportistica Conservazione - Documenti da Integrare
+|Permesso per ripristinare la versione di un documento come docuemnto principale
+|Permesso che consente il download dell'archivio ZIP relativo ai documenti in errore conservazione
+|Permesso per l'invio email ai referenti relativa ai documenti in errore conservazione
+|Permesso per il download dell'archivio ZIP relativo ai documenti da integrare
+|Permesso per l'invio email ai referenti relativa ai documenti da integrare
+|Permesso per invio email a PARER
+|Permesso per la visualizzazione del tab tickets in monitoraggio documenti
+|Permesso per visualizzare le notifiche dei documenti NSO accodati
+|Permesso per scaricare i blob legati alle diverse sessioni. Abilita la visualizzazione dei tasti
+|Gestione dei processi schedulati
+|Permesso di eseguire ricerche anche sugli elementi eliminati
+|Per accedere all'interfaccia  di gestione documenti in lavorazione
+|Permesso per la modifica della configurazione di NoTIER
+|Firma dei documenti
+1.4+.^s| Gestione Anagrafica Ruoli
+|Cancellazione entità Ruoli
+|Creazione entità Ruoli
+|Modifica entità Ruoli
+|Visualizzazione entità Ruoli
+1.5+.^s| Gestione Bacheca Notizie
+|Permesso per eliminare le notizie
+|Permesso per creare una notizia
+|Permesso per modificare le notizie
+|Permesso per visualizzare la notizia
+|Permesso per ricercare le notizie
+1.2+.^s|Gestione Fogli di Stile
+|Permesso per ricerca Fogli di Stile
+|Permesso per creazione Fogli di Stile
+1.5+.^s|Gestione SMP
+|Permesso per eliminare gli identificatori di documenti smp
+|Permesso per gestire le funzionalità smp
+|Permesso per creare identificatori di documenti smp
+|Permesso per visualizzare gli identificatori di documenti smp
+|Permesso per modificare gli identificatori di documenti smp
+1.12+.^s| Gestione Anagrafica
+|Creazione entità Organizzazioni
+|Modifica entità Organizzazioni
+|Visualizzazione entità Organizzazioni
+|Cancellazione entità Organizzazioni
+|Creazione entità Soggetti
+|Modifica entità Soggetti
+|Visualizzazione entità Soggetti
+|Cancellazione entità Soggetti
+|Creazione entità Utenti
+|Modifica entità Utenti
+|Visualizzazione entità Utenti
+|Cancellazione entità Utenti
+.^s|Accettazione/Rifiuto Fatture/NC | Permesso per modificare documenti nel monitoraggio
+.^s|Approvazione Documenti | Approvazione dei documenti
+1.8+.^s|Conservazione
+|Permesso per accesso pagina di ricerca Documenti da versare
+|Permesso di ripetere il versamento
+|Permesso per accesso pagina di reportistica Conservazione - Riepilogo
+|Permesso per accesso pagina di reportistica Conservazione - Documenti in Errore Versameto
+|Permesso per integrare i dati fiscali e forzare la conservazione di un documento
+|Permesso per accesso pagina di reportistica Conservazione - Documenti da Integrare
+|Permesso di cancellare i dati fiscali
+|Permesso di annullare il versamento
+.^s|Notifiche Admin | Permesso per ricevere eventi su job quartz bloccati
+.^s|Notifiche documenti bloccati | Notifiche documenti bloccati
+.^s|Reinvio Ordini e DDT | Permesso per forzare il reinvio BusDox dopo fallimento tentativi del job
+1.6+.^s| Reportistica
+|Permesso per accesso pagina di reportistica Documenti
+|Permesso per accesso pagina di reportistica Notifiche
+|Permesso per accesso pagina di reportistica Stato Documenti
+|Permesso per accesso pagina di reportistica di conteggio soggetti per tipo documento
+|Permesso per accesso pagina di reportistica Organizzazioni
+|Permesso per accesso pagina di reportistica Uffici
+1.3+.^s| Visualizzazione e operazioni su notifiche NSO
+|Permesso per visualizzare le notifiche dei documenti NSO in errore
+|Permesso di effettuare il reinvio verso NSO da interfaccia
+|Permesso per visualizzare le notifiche dei documenti NSO accodati
+1.4+.^s| Utente NSO
+|Permesso per vedere la pagina delle specifiche di invio/ricezione del documento
+|Permesso per visualizzare la tab versioni del documento
+|Permesso di visualizzazione allegati nel monitoraggio
+|Permesso per nuovo monitoraggio documenti
+1.9+.^s| Utente Web
+|Permesso di scaricare file, effettuare azioni e visionare allegati di uno specifico documento
+|Permesso di visualizzazione allegati nel monitoraggio
+|Permesso per scaricare i blob legati alle diverse sessioni. Abilita la visualizzazione dei tasti
+|Permesso per nuovo monitoraggio documenti
+|Permesso per vedere la pagina delle specifiche di invio/ricezione del documento
+|Permesso per visualizzare la tab versioni del documento
+|Permesso di modificare il proprio profilo utente
+|Permesso che consente la ricerca di Peppol ID SU Peppol Directory
+|Permesso che consente la ricerca di Peppol ID di Operatori Economici da Piattaforma
+||
+|===
 
 === Accreditamento
 
@@ -73,7 +154,7 @@ L'inserimento di un nuovo utente a sistema può avvenire direttamente da interfa
 A seguito dell'inserimento dei dati e, quindi, dell'accreditamento dell'utente, NoTI-ER esegue quanto descritto:
 
 . invia una mail automatica all'indirizzo di posta elettronica fornito con l'indicazione dei ruoli e lo username footnote:[della forma *_nome.cognome_*.] associati all'utente;
-. invia una seconda mail automatica con indicata una password temporanea generata dal sistema, la quale dovrà essere cambiata una volta effettuato al primo accesso.
+. invia una seconda mail automatica con indicata una password temporanea generata dal sistema, la quale dovrà essere cambiata una volta effettuato il primo accesso.
 
 === Navigazione dalla _Home_ di NoTI-ER
 
@@ -86,13 +167,13 @@ Tenendo presente questo, di seguito è riportato l'elenco che descrive la totali
 [width="95%",cols="",^,^,^,^,^">,options="header,footer"]
 |===
 ^.^|Gestione Documenti ^.^|Anagrafica ^.^|Peppol ^.^|Gestione ^.^| Reportistica ^.^|Amministrazione
-^.^| Monitoraggio Documenti
+.^| Monitoraggio Documenti
 
  Documenti da Versare
 
 Approva Documenti
 
-Firma Documenti ^.^|
+Firma Documenti .^|
 
 Organizzazioni +
 (cerca e crea)
@@ -104,13 +185,13 @@ Utenti +
 (cerca e crea)
 
 Ruoli +
-(cerca e crea) ^.^|
+(cerca e crea) .^|
 
 Cerca Participant ID PEPPOL
 
 Cerca Participant ID PEPPOL su SATER
 
-Lookup Participant ID ^.^|
+Lookup Participant ID .^|
 
 Fogli Stile +
 (cerca e carica)
@@ -119,7 +200,7 @@ SMP +
 (gestione identificatori)
 
 Notizie +
-(cerca e crea)  ^.^|
+(cerca e crea)  .^|
 
 Conteggio Documenti
 
@@ -133,7 +214,7 @@ Elenchi Anagrafici +
 (organizzazioni e uffici)
 
 Monitoraggio Conservazione +
-(riepilogo, documenti da integrare, documenti in errore) ^.^|
+(riepilogo, documenti da integrare, documenti in errore) .^|
 
 Documenti in Lavorazione
 
@@ -148,12 +229,16 @@ Configurazione NoTIER
 [CAUTION]
 
 ====
-Inoltre, per chi possiede il ruolo specifico (in generale, i referenti delle organizzazioni) è possibile accedere dal menu anche alle notifiche di ordini e DDT bloccati su Peppol o da NSO.
-Accedendo a tale funzione (rapresentata da una fiammella con indicato il numero di documenti dell'organizzazione interessati) è possibile, non solo verificare puntualmente quali
-siano gli ordini che hanno problemi di invio, ma anche agire su di essi, re-inviandoli o invalidandoli puntualmente o in maniera massiva.
+Inoltre, per chi possiede il ruolo specifico (in generale, i referenti delle organizzazioni) è possibile accedere dalla _Home_ anche alle notifiche di ordini e DDT bloccati su Peppol o da NSO.
+Accedendo a tale funzione (rapresentata da una fiammella con indicato il numero di documenti dell'organizzazione interessati) è possibile non solo verificare puntualmente quali
+siano gli ordini che hanno problemi di invio, ma anche agire sugli stessi, re-inviandoli o invalidandoli puntualmente o anche in maniera massiva.
 ====
 
-=== Monitoraggio Documenti
+=== Gestione Documenti
+
+In questo menu confluiscono le funzionalità di NoTI-ER attue al monitoraggio dei documenti e all'effettuazione di operazioni su di essi.
+
+==== Monitoraggio Documenti
 
 La funzione principale esposta nell'interfaccia di NoTI-ER è quella del _Monitoraggio Documenti_, raggiungibile attraverso il menu _Gestione Documenti_. +
 Questa consente agli utenti di verificare lo stato dei documenti in transito su NoTI-ER e di eseguire azioni che impattano sul loro ciclo di vita.
@@ -167,7 +252,7 @@ sottofunzioni distinte e complementari: *il monitoraggio sui documenti inviati e
 * a prescindere dal ciclo, *il dominio di ricerca consiste solo nei documenti principali*. I documenti correlati sono visualizzabili
 a partire dal dettaglio del documento principale.
 
-==== Ricerca dei documenti
+===== Ricerca dei documenti
 
 La funzione di monitoraggio si apre sulla pagina di ricerca dei documenti. In questa sezione, è possibile inserire i filtri di interesse per la ricerca dei documenti, in maniera
 tale da velocizzarne l'individuazione. +
@@ -181,7 +266,7 @@ I filtri utilizzabili sono quelli riportati nell'immagine sottostante e sono ria
 * *stato documento*: selezione fra tutti i possibili stati del documento (compresa la selezione multipla);
 * *inviato a NSO*: disponibile solo per i documenti inviati, è possibile selezionare i documenti inviati a NSO, non inviati a NSO o tutti;
 * *identificativi NSO*: disponibile solo per i documenti inviati, è possibile filtrare per specifici identificativi NSO (se ricerca multipla, è necessario usare la virgola fra un identificativo e un altro);
-* #*cerca anche tra gli eliminati*: se spuntato, permette di ricercare anche fra i documenti eliminati logicamente.#
+* *cerca anche tra gli eliminati*: se spuntato, permette di ricercare anche fra i documenti eliminati logicamente.
 * *data ricezione NoTI-ER*: si può filtrare per range temporale di ricezione del documento in NoTI-ER;
 * *data invio*: si può filtrare per la data di invio del documento da parte di NoTI-ER, solo per i documenti inviati.
 
@@ -196,12 +281,12 @@ L'immagina seguente mostra un esempio di lista documenti restituita a seguito di
 .esempio di visualizzazione lista documenti dalla pagina del monitoraggio
 image::images\10.Interfaccia_Web-d5c3d.png[]
 
-==== Metastati
+===== Metastati
 Il ciclo di vita di un documento in NoTI-ER è costituito dall'insieme di tutte le transizioni di stato e delle relative sessioni footnote:[vedi il <<anchor-7, capitolo 8. Processi applicativi.>> ].
 Dunque, un documento può essere caratterizzato da un'ampia collezione di valori di stato. +
 Per rendere più intuitivo l'utilizzo della funzione di monitoraggio e consentire all'utente un'immediata comprensione dello stato del documento, è stato introdotto il concetto di _metastato_.
 
-Un *metastato* riassume in un unico valore l'insieme degli stati del documentoe di quelli delle sessioni validi in uno specifico momento del suo ciclo di vita. +
+Un *metastato* riassume in un unico valore l'insieme degli stati del documento e di quelli delle sessioni validi in uno specifico momento del suo ciclo di vita. +
 Contestualmente, anche la rappresentazione delle varie fasi del flusso è semplificata, in modo da riferire i valori dei metastati a tre contesti semanticamente significativi del ciclo di vita:
 
 * *invio/ricezione*: metastati del documento che descrivono le fasi di transito delo stesso, in riferimento all'interazione con SdI e Peppol.
@@ -212,17 +297,296 @@ la validazione o lo scarto di ordini inviati ad NSO.
 Ogni metastatato è associato ad una specifica icona, visualizzata nella maschera dei risultati della funzione di monitoraggio. In particolare,
 nella lista dei documenti, a capo della colonna stato, sono riportate un massimo di tre metastati che descrivono la situazione del documento in termini di esito di invio/ricezione, esito di validazione/accettazione, esito di conservazione.
 
-Si rimanda al #manuale di monitoraggio NoTI-ER# per la spiegazione e il dettaglio di tutti i metastati possibili.
+Si rimanda al #_manuale di monitoraggio NoTI-ER_# per la spiegazione e il dettaglio di tutti i metastati possibili.
 
 
-==== Dettaglio del documento
+===== Dettaglio del documento
 
 Agendo sull'apposito tasto della lista documenti, in riferimento alla colonna _dettaglio_, si accede alle specifiche del documento. +
 Da questa sezione, oltre a rilevare informazioni generali sul documento (urn, tipo documento, numero, soggetto mittente e destinatario, anno e date di interesse), è possibile
-scaricare le versioni XML del file disponibili e attuare azioni sul transito. +
+scaricare le versioni XML del file disponibili, visualizzarli attraverso il foglio di stile integrato e attuare azioni sul transito. +
 Nella figura sottostante è riportato un esempio di dettaglio documento.
 
 .esempio di visualizzazione "dettaglio documento"
 image::images\10.Interfaccia_Web-52a68.png[]
 
-In corrispondenza della sezione _file_
+Oltre ai *dati principali* del documento, attraverso i tab posti in alto, si può accedere alle sezioni:
+
+* *notifiche*: dove sono rese disponibili tutte le notifiche di pertinenza del documento principale in oggetto e dove è possibile scaricare il file XML della notifica,
+visualizzarla attraverso foglio di stile e, a sua volta, accedere al dettaglio della notifica.
+* *documenti collegati*: dove sono resi disponibili i documenti collegati al documento principale in oggetto e dove è possibile scaricare il file XML del documento collegato, visualizzarlo attraverso foglio di stile
+e, a sua volta, accedere al dettaglio. Ad esempio, dalla scheda _documenti collegati_ di un DDT si potrà accedere ai dati di un eventuale ordine collegato.
+* *stato*: visualizza una panoramica sugli stati di tutte le sessioni associate al documento e del doucmento stesso. Dà una fotografia di quelli che sono gli stati di sessioni e documento al momento in cui ci si trova.
+* *versioni*: sono rese disponibili tutti le versioni dello stesso documento ed è possibie effettuare il download dei file XML dei documenti versionati e dei rispettivi documenti correlati. Ad esempio, quando una fattura viene sovrascritta (_<AccettaChiaeDuplicata> is true_), nella scheda
+_Dati Principali_, sono riportate le informazioni sull'ultima versione, mentre nella scheda _Versioni_ sono presenti i file già sovrascritti.
+* *ticket*: di utilità del supporto tecnico, serve a collegare uno specifico documento ad una richiesta aperta verso il supporto tramite sistema di ticketing.
+* *invio NSO*: visualizzato solo in caso di invio verso NSO, rende disponili le informazioni di competenza NSO, quali:
+** nome file inviato;
+** tipo file;
+** Id trasmissione NSO;
+** data ricezione su NSO;
+** numero tentativi di invio;
+** codice di errore validazione;
+** dettaglio esito invio a NSO.
+* *Invio Peppol*: visualizzato solo in caso di invio verso Peppol, rende disponili le informazioni di:
+** endpoint destinatario;
+** Peppol Participant ID mittente;
+** Peppol Participant ID destinatario;
+** protocollo utilizzato per l'invio (AS2, AS4);
+** numero tentativi di invio;
+** message ID;
+** transmission ID;
+** process ID;
+** document ID.
+* *invio SDI*: visualizzato solo in caso di invio verso SDI, rende disponili le informazioni di competenza SdI, quali:
+** formato fatturazione;
+** identificativo SDI;
+** nome file;
+** codice esito SDI;
+** data ricezione SDI;
+** codice esito NEC;
+** n.tentativi;
+** progressivo invio;
+** approvazione automatica;
+** invio in conservazione.
+
+==== Documenti da Versare
+
+La funzione _Documenti da Versare_ permettere di ricevere la lista dei documenti che hanno ricevuto un errore di versamento e si trovano in uno stato VERSATO_KO.  +
+L'immagine seguente mostra la schermata di ricerca, con i filtri impostabili, e il risultato nella lista.
+
+.maschera di ricerca dei Documenti da Versare e lista restituita
+image::images\10.Interfaccia_Web-376d0.png[]
+
+Come si nota, dalla lista è possibile:
+
+* esportare il risultato della ricerca in un file excel;
+* entrare nel dettaglio documento, attraverso il tasto azione _visualizza_;
+* ripere puntualmente il versamento di un documento attraverso il tasto azione _ripeti versamento_;
+* ripetere massivamente il versamento di documenti tramite i tasti _ripeti tutti i versamenti_ e _ripeti i versamenti selezionati_.
+
+==== Approva Documenti
+
+La funzione _Approva Documenti_ permette all'Ente di approvare manualmente i documenti convertiti da NoTI-ER. +
+Questa operazione è utile nel caso in cui sia stato valorizzato a _false_ il tag di _<ApprovazioneAutomatica>_ presente nei metadati di invio documento.  +
+L'immagine seguente mostra la schermata di ricerca con i filtri impostabili, il risultato della ricerca e le possibili operazioni da effettuare.
+
+.maschera di ricerca dei documenti da approvare, lista restituita e operazioni possibili
+image::images\10.Interfaccia_Web-60407.png[]
+
+=== Anagrafica
+
+Il menu anagrafica è disponibile per gli utenti con ruoli di amministrazione, gestione anagrafica ruoli e gestione anagrafica. +
+Secondo i sottomenu, è possibile effettuare operazioni su organizzazioni, uffici, utenti e ruoli.
+
+==== Organizzazioni
+
+Accedendo al sottomenu _organizzazioni_ si possono attivare le funzioni di _cerca organizzazione_ e _nuova organizzazione_. Quest'ultima permette di censire una nuova organizzazione. +
+L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
+
+.maschera di ricerca organizzazioni e lista restituita.
+image::images\10.Interfaccia_Web-92000.png[]
+
+Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio dell'organizzazione in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
+Accedendo all'interno di una specifica organizzazione, si viene re-indirizzati alla scheda _Dati Principali_, dove sono riportate le informazioni anagrafiche come la denominazione, l'indirizzo, CF e P.Iva, il telefono, la PEC, e i dati del referente.
+Inoltre, sono visualizzate e modificabili anche le informazioni riguardanti il certificato utilizzato e i servizi NoTI-ER ai quali l'organizzazione è abilitata, rispettivamente sotto le schede _Certificato_ e _Servizi_.
+
+.scheda dei Servizi all'interno del dettaglio organizzazione
+image::images\10.Interfaccia_Web-80033.png[]
+
+==== Uffici
+
+Analogamente a quanto descritto per le organizzazioni, è possibile effettuare anche la ricerca e creazione di nuovi uffici attraverso il sottomenu _uffici_.
+L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
+
+.maschera di ricerca uffici e lista restituita
+image::images\10.Interfaccia_Web-c46ae.png[]
+
+Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio dell'ufficio in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
+Accedendo all'interno di uno specifico ufficio, si viene re-indirizzati alla scheda _Dati Principali_, dove sono riportate le informazioni anagrafiche come la l'organizzazione di appartenenza, la denominazione, CF e P.Iva, codice IPA e codice destinatario, l'indirizzo, il telefono, la PEC e i dati del referente. +
+Inoltre, navigando sulle varie schede, sono visualizzate e modificabili anche le informazioni su:
+
+* *documenti*: vengono gestite le abilitazioni ai vari tipi documento per l'ufficio;
+* *configurazione Peppol*: vengono gestite le proprietà che consentono all'ufficio di operare su rete Peppol, compreso il certificato e la registrazione SMP;
+* *configurazione Parer*: vengono gestite le proprietà che consentono all'ufficio di operare su Parer;
+* *versamenti*: vengono gestite le abilitazioni al versamento, in relazione ai documenti versabili;
+* *fogli di stile*: viene gestito il versamento dei fogli di stile, per permettere all'ufficio di poter versare i documenti associandoli a dei fogli di stile validi.
+
+.scheda dei Dati Principali all'interno del dettaglio ufficio
+image::images\10.Interfaccia_Web-89024.png[]
+
+==== Utenti
+
+Questa funzionalità permette ricercare e modificare gli utenti già registrati in NoTI-ER e di poterne censire di nuovi. +
+L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
+
+.maschera di ricerca utenti e lista restituita
+image::images\10.Interfaccia_Web-647fc.png[]
+
+[NOTE]
+====
+Il filtro _Autorizzazione_ presente nella maschera di ricerca consente, di default, la ricerca di utenti con ruolo/privilegio minore di chi effettua l'operazione. La ricerca di utenti con autorizzazione maggiore è possibile modificando il filtro "A" di "Autorizzazione". +
+Non è in ogni caso possibile attivare la funzione di "modifica utente" per gli utenti con autorizzazione maggiore, per i quali è resa disponibile solamente la funzione di visualizzazione.
+====
+Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio dell'utente in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
+Accedendo all'interno di uno specifico utente, si viene re-indirizzati alla scheda _Dati Principali_, dove sono riportate le informazioni anagrafiche come il nome, il cognome, lo user ID, il ruolo, il codice fiscale, l'email e il telefono. +
+Inoltre, se ci troviamo in modalità di editing, è presente un tasto _Azioni_ che permette di disattivare o attivare l'utenza e resettare la password. +
+Nella scheda _Uffici_ è possibile visualizzare o modificare le associazioni ufficio / utente.
+
+.scheda dei Dati Principali all'interno del dettaglio utente
+image::images\10.Interfaccia_Web-48767.png[]
+
+
+==== Ruoli
+
+Questa sezione permette di verificare quali siano i ruoli attivi per gli utenti all'interno del sistema NoTI-ER e di crearne di nuovi.
+L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
+
+.maschera di ricerca ruoli e lita restituita
+image::images\10.Interfaccia_Web-177d2.png[]
+
+Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio del ruolo in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
+Modificare un "ruolo" significa poter cambiare nome, descrizione e cambiare l'associazione con i permessi. +
+Un ruolo non è altro che un contenitore di permessi e, pertanto, può essere modificato nelle sue parti.
+
+=== Peppol
+
+Dal menu _Peppol_ si accede a dei sottomenu che permettono di effettuare operazioni in lettura sulla rete Peppol.
+
+==== Cerca Participant ID PEPPOL
+
+La funzione _Cerca Participant ID PEPPOL_ consente di raggiungere in lettura la Peppol Directory.  +
+L'immagine seguente mostra i filtri impostabili nella ricerca e un esempio di risultato restituito in lista.
+
+.maschera di ricerca Participant ID Peppol
+image::images\10.Interfaccia_Web-09020.png[]
+
+La lista può essere esportata in un foglio excel. +
+Inoltre, agendo sul tasto visualizza, in corrispondenza della colonna "Azioni" della lista, si viene re-indirizzati direttamente alla Peppol Directory, in corrispondenza del soggetto selezionato.
+
+==== Ricerca Participant ID PEPPOL su SATER
+
+La funzione _Cerca Participant ID PEPPOL su SATER_ consente di raggiungere in lettura la banca dati di SATER. +
+L'immagine seguente mostra i filtri impostabili nella ricerca e un esempio di risultato restituito in lista.
+
+.maschera di ricerca Participant ID Peppol su SATER
+image::images\10.Interfaccia_Web-77f1b.png[]
+
+L'unica operazione possibile è quella dell'esportazione excel della lista.
+
+==== Lookup Participant ID
+
+La funzione _Lookup Particpant ID_, inserendo un participant ID Peppol, consente di raggiungere in lettura l'SML per verificare la configurazione Peppol attiva del soggetto di interesse. +
+L'immagine seguente mostra un esempio di risultato di ricerca.
+
+.maschera di lookup participant ID
+image::images\10.Interfaccia_Web-52b9d.png[]
+
+Per il participant ID Peppol indicato vengono mostrate le informazioni sui documenti configurati. +
+Nella sezione _output Json e Xml_ è possibile analizzare il file Json o XML del risultato della ricerca su SML.
+
+=== Reportistica
+
+La funzione di _Reportistica_ è utilizzabile da quegli utenti che possiedono i privilegi associati al ruolo di "reportistica". +
+Il sottomenu permette di selezionare l'opzione specifica per il tipo di report che si intende ricevere.
+
+====  Conteggio Documenti
+
+La funzionalità di _Conteggio Documenti_ permette di ricevere una lista raggruppata per tipo organizzazione, organizzazione, ufficio, tipo documento, flusso NSO e formato del documento che indica il totale dei documenti per lo specifico raggruppamento. +
+I filtri impostabili sono descritti dall'immagine seguente, che riporta un esempio di reportistica per conteggio documenti. +
+Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
+
+.maschera di ricerca Conteggio Documenti e risultato restituito
+image::images\10.Interfaccia_Web-5599d.png[]
+
+==== Conteggio Notifiche
+
+La funzionalità di _Conteggio Notifiche_ permette di ricevere una lista raggruppata per tipo organizzazione, organizzazione, ufficio e tipo notifica, che indica il totale delle notifiche per lo specifico raggruppamento. +
+I filtri impostabili sono descritti dall'immagine seguente, che riporta un esempio di reportistica per il conteggio notifiche. +
+Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
+
+.maschera di ricerca Conteggio Notifiche e risultato restituito
+image::images\10.Interfaccia_Web-3737b.png[]
+
+==== Stato Documenti
+
+La funzionalità di _Conteggio Stato Documenti_ permette di ricevere una lista raggruppata per tipo organizzazione, organizzazione, ufficio, tipo documento e stato del documento, che indica il totale dei documenti per lo specifico raggruppamento e la percentuale sul totale dei documenti della specifica organizzazione, in corrispondenza dei filtri inseriti. +
+I filtri impostabili sono descritti dall'immagine seguente, che riporta un esempio di reportistica per il conteggio per stato documento. +
+Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
+
+.maschera di ricerca Conteggio per Stato Documenti e risultato restituito
+image::images\10.Interfaccia_Web-496a4.png[]
+
+==== Conteggio Organizzazioni
+
+La funzionalità di _Conteggio Organizzazioni_ permette di ricevere una lista raggruppata per tipo documento e tipo organizzazione, che indica il totale delle organizzazioni appartenenti al tipo organizzazione indicato che gestiscono il tipo documento indicato, per il tipo ciclo specificato nei parametri di filtro.
+I filtri impostabili sono descritti dall'immagine seguente, che riporta un esempio di reportistica per il conteggio organizzazioni. +
+Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
+
+.maschera di ricerca Conteggio Organizzazioni e risultato restituito
+image::images\10.Interfaccia_Web-fa713.png[]
+
+==== Elenchi Anagrafici
+
+La funzionalità di _Elenchi Anagrafici_ permette di ricevere una lista con le informazioni anagrafiche delle organizzazioni o degli uffici.
+La distinzione fra ricerca per organizzazioni e ricerca per uffici si effettua attraverso un ulteriore sottomenu facente capo al sottomenu "Elenchi Anagrafici" della funzione di "Reportistica".
+I filtri impostabili sono descritti dall'immagine seguente, che riporta un esempio di reportistica per elenchi anagrafici di organizzazioni. +
+Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
+
+.maschera di ricerca Elenchi Anagrafici per organizzazioni e risultato restituito.
+image::images\10.Interfaccia_Web-d2e52.png[]
+
+====  Monitoraggio Conservazione
+
+La funzione _Monitoraggio Conservazione_ consente di ricevere una fotografia di quella che è la situazione dei documenti già inviati o da inviare in conservazione. +
+In particolare, si ha a disposizione un sottomenu che permette di distinguere fra "riepilogo" dei documenti per la conservazione, "documenti da integrare" per individuare qual sono i documenti ancora in attesa di integrazione dati fiscali, "documenti in errore"
+per individuare i documenti di cui si è già provveduto all'invio in conservazione, ma che sono stati scartati da ParER a causa di anomalie.
+
+===== Riepilogo
+
+Accedendo al sottomenu _Riepilogo_ si ha la possibilità di creare un report completo sulla situazione attuale di conservazione per le organizzazioni e gli uffici filtrati e per l'anno di interesse. Il risultato è suddiviso in interfaccia in base al tipo ciclo. +
+L'immagine seguente mostra quali sono i fltri impostabili e riporta un esempio di reportistica per il riepilogo della conservazione. +
+Si noti come sia possibile esportare il risultato della ricerca in un foglio excel, attraverso il tasto "Esporta Excel". Inoltre, agendo sul tasto "Invia Email a PARER" si comunica direttamente a ParER il risultato della ricerca.
+
+.maschera di Riepilogo dei documenti in conservazione e risultato restituito
+image::images\10.Interfaccia_Web-d948b.png[]
+
+===== Documenti da Integrare
+
+Accedendo al sottomenu _Documenti da Integrare_ si ha la possibilità di creare un report che indichi puntualmente quali sono i documenti ancora in attesa di integrazione dei dati fiscali per le organizzazioni e gli uffici filtrati e per l'anno di interesse. +
+L'immagine seguente mostra quali sono i fltri impostabili e riporta un esempio di reportistica per il riepilogo della conservazione. +
+Si noti come sia possibile esportare il risultato totale della ricerca in un foglio excel, attraverso il tasto "Esporta Excel", oppure scaricare l'archivio contenente i report divisi per singola organizzazione, attraverso il tasto "Scarica Archivio".
+Inoltre, agendo sul tasto "Invia Email ai Referenti" si procede all'invio di una comunicazione con il report e il promemoria all'integrazione ai referenti assocati all'organizzazione.
+
+.maschera di Riepilogo dei Documenti da Integrare e risultato restituito
+image::images\10.Interfaccia_Web-4d366.png[]
+
+===== Documenti in Errore
+
+Accedendo al sottomenu _Documenti in Errore_ si ha la possibilità di creare un report che indichi puntualmente quali sono i documenti per i quali si è ricevuto un errore di coservazione, per le organizzazioni e gli uffici filtrati e per l'anno di interesse. +
+L'immagine seguente mostra quali sono i fltri impostabili e riporta un esempio di reportistica per il riepilogo della conservazione. +
+Si noti come sia possibile esportare il risultato totale della ricerca in un foglio excel, attraverso il tasto "Esporta Excel", oppure scaricare l'archivio contenente i report divisi per singola organizzazione, attraverso il tasto "Scarica Archivio".
+Inoltre, agendo sul tasto "Invia Email ai Referenti" si procede all'invio di una comunicazione con il report e il promemoria alla correzione degli errori ai referenti assocati all'organizzazione.
+
+.maschera di Riepilogo dei Documenti in Errore Conservazione
+image::images\10.Interfaccia_Web-18312.png[]
+
+=== Gestione e Amministrazione
+
+Le sezioni di NoTi-ER di _Gestione_ e _Amministrazione_ sono rese disponibili solamente agli utenti con alte autorizzazioni.
+
+Le funzionalità di _Amministrazione_ sono utilizzabili dalle utenze con ruolo _Amministratore_ e si dividono in:
+
+* *Documenti in Lavorazione*: permette la ricerca dei documenti rimasti bloccati in stato IN_LAVORAZIONE, a seguito di errori sulla validazione, e l'eventuale rielaborazione o invalidazione degli stessi.
+* *Job Monitoring*: permette di verificare il corretto funzionamento dei job di NoTI-ER e la possibilità di agire manualmente su di essi per interromperne o avviarne l'attività.
+* *Configurazione NoTIER*: permette di visualizzare il valore di determinati parametri di configurazione di NoTI-ER.
+
+Le funzionalità di _Gestione_ sono utilizzabili, oltre che dall'utente amministratore, anche da chi possiede rispettivamente i ruoli di _Gestione Fogli di Stile_, _Gestione Bacheca Notizie_ e _Gestione SMP_:
+
+* *Fogli di Stile* si divide in:
+**  _Cerca Foglio di Stile_ permette di ricercare e scaricare i fogli di stile filtrando per tipo documento, tipo formato e fogli attivi (possono essere ricercate tutte le versioni dei fogli di stile utilizzate da NoTI-ER).
+** _Carica Foglio di Stile_ permette di caricare una nuova versione di un foglio di stile, effettuandone il rilascio in produzione.
+* *SMP* permette di verificare quali sono gli identificatori dei documenti presenti in NoTI-ER, di modicarli e di aggiungerne dei nuovi.
+* *Notizie* si divide in:
+** _Ricerca Notizie_ per ricercare nello storico tutte le notizie pubblicate in NoTI-ER;
+** _Crea Notizia_ per creare una nuova notizia da pubblicare in NoTI-ER.

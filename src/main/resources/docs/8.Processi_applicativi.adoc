@@ -1,4 +1,4 @@
-== Processi applicativi (((8. Processi applicativi)))
+== Processi applicativi (((8. Processi applicativi)))  [[anchor-7]]
 
 Tutti i documenti in transito su NoTI-ER vengono associati ad un *ciclo di vita* ben definito, che dipende del tipo
 di processo di e-Procurement  (Inbound o Outbound) e dall'instradamento da e verso i sistemi integrati (SdI, Peppol, NSO e ParER).

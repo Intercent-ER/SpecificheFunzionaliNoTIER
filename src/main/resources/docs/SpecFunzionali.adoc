@@ -1,5 +1,8 @@
 = *Specifiche funzionali NoTI-ER*
-Autore: Intercent-ER
+
+Autore: Intercent-ER +
+Ultimo aggiornamento: 13-10-2020
+
 :doctype: book
 :encoding: utf-8
 :lang: it
@@ -7,13 +10,12 @@ Autore: Intercent-ER
 :toclevels: 2
 :numbered:
 
-include::indice.adoc[]
 
-include::1.Obiettivi del documento.adoc[]
+include::1.Obiettivi_del_documento.adoc[]
 
 include::2.Premessa.adoc[]
 
-include::3.Requisiti di base.adoc[]
+include::3.Requisiti_di_base.adoc[]
 
 include::4.Attori.adoc[]
 
@@ -21,10 +23,10 @@ include::5.Integrazione.adoc[]
 
 include::6.Documenti.adoc[]
 
-include::7.Processi di e-Procurement.adoc[]
+include::7.Processi_di_e-Procurement.adoc[]
 
-include::8.Processi applicativi.adoc[]
+include::8.Processi_Applicativi.adoc[]
 
 include::9.Servizi.adoc[]
 
-include::10.Interfaccia Web.adoc[]
+include::10.Interfaccia_Web.adoc[]

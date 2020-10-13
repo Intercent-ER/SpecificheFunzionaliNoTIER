@@ -21,6 +21,7 @@ Nello specifico i servizi esposti da NoTI-ER sono:
 * integrazione dati fiscali;
 * interrogazione Peppol Directory;
 * lookup participantID;
+* monitoraggio;
 * blocco conservazione.
 
 Inoltre, in un'ottica di integrazione con SATER footnote:[vedi <<anchor-6, paragrafo 5.4. Integrazione con SATER>>.], NoTI-ER espone i seguenti servizi dedicati:

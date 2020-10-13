@@ -23,7 +23,7 @@ In questo contesto, NoTI-ER (più precisamente, il suo Access Point) svolge la f
 di secondo o terzo corner, a seconda di quale sia l'indirizzamento del flusso documentale
 in atto.
 
-image::./immagini/4-corner Peppol.png[align="left", title= "Modello 4-corners Peppol"]
+image::immagini/4-corner Peppol.png[align="left", title= "Modello 4-corners Peppol"]
 
 
 Inoltre, con l'approvazione di uno specifico decreto del Ministero dell'Economia e Finanze
