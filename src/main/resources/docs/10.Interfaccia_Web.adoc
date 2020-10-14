@@ -1,4 +1,4 @@
-|== Interfaccia Web (((10.Interfaccia Web)))
+== Interfaccia Web (((10.Interfaccia Web)))
 
 L'interfaccia web è la seconda modalità che NoTI-ER mette a disposizione per l'integrazione lato client, oltre ai servizi. +
 Le funzionalità presenti in interfaccia sono state sviluppate con l'obiettivo di offrire una modalità di _monitoraggio dei documenti_
@@ -159,7 +159,7 @@ A seguito dell'inserimento dei dati e, quindi, dell'accreditamento dell'utente, 
 === Navigazione dalla _Home_ di NoTI-ER
 
 Raggiunta la pagina di login footnote:[https://notier.regione.emilia-romagna.it/notier/login.html] è possibile accedere a NoTI-ER utilizzando le credenziali in possesso o richiedere una nuova password in caso di dimenticanza. +
-Se il login viene effettuato correttamente, si viene reindirizzati alla _Home_ di NoTI-ER dove comparirà in alto il menu per accedere alle varie funzioni rese disponibili. +
+Se il login viene effettuato correttamente, si viene reindirizzati alla _Home_ di NoTI-ER dove comparirà in alto il menu per accedere alle varie funzionalità rese disponibili. +
 Come già accennato, *la possibilità di accedere a determinate funzioni dipende strettamente dai ruoli posseduti dall'utente autenticato*. +
 Tenendo presente questo, di seguito è riportato l'elenco che descrive la totalità delle funzioni disponibili in interfaccia.
 
@@ -171,9 +171,7 @@ Tenendo presente questo, di seguito è riportato l'elenco che descrive la totali
 
  Documenti da Versare
 
-Approva Documenti
-
-Firma Documenti .^|
+Approva Documenti .^|
 
 Organizzazioni +
 (cerca e crea)
@@ -226,10 +224,9 @@ Configurazione NoTIER
 |===
 
 
-[CAUTION]
-
+[NOTE]
 ====
-Inoltre, per chi possiede il ruolo specifico (in generale, i referenti delle organizzazioni) è possibile accedere dalla _Home_ anche alle notifiche di ordini e DDT bloccati su Peppol o da NSO.
+Per chi possiede lo specifico ruolo di _notifiche documenti bloccati_ (in generale, i referenti delle organizzazioni) è possibile accedere dalla _Home_ anche alle notifiche di ordini e DDT bloccati su Peppol o da NSO.
 Accedendo a tale funzione (rapresentata da una fiammella con indicato il numero di documenti dell'organizzazione interessati) è possibile non solo verificare puntualmente quali
 siano gli ordini che hanno problemi di invio, ma anche agire sugli stessi, re-inviandoli o invalidandoli puntualmente o anche in maniera massiva.
 ====
@@ -243,11 +240,11 @@ In questo menu confluiscono le funzionalità di NoTI-ER attue al monitoraggio de
 La funzione principale esposta nell'interfaccia di NoTI-ER è quella del _Monitoraggio Documenti_, raggiungibile attraverso il menu _Gestione Documenti_. +
 Questa consente agli utenti di verificare lo stato dei documenti in transito su NoTI-ER e di eseguire azioni che impattano sul loro ciclo di vita.
 
-L'ambito di manovra dell'utente consiste *in tutti e i soli documenti emessi o destinati ai soggetti ai quali l'utente stesso è associato*.
+L'ambito di manovra dell'utente consiste *in tutti e i soli documenti emessi o destinati agli uffici ai quali l'utente stesso è associato*.
 
 Relativamente alla ricerca dei documenti di interesse, vale quanto segue:
 
-* il dominio di ricerca è suddiviso a livello funzionale a seconda del ciclo di riferimento. Pertanto, il monitoraggio è composto da due
+* il dominio di ricerca è suddiviso, a livello funzionale, a seconda del ciclo di riferimento. Pertanto, il monitoraggio è composto da due
 sottofunzioni distinte e complementari: *il monitoraggio sui documenti inviati e quello sui documenti ricevuti*;
 * a prescindere dal ciclo, *il dominio di ricerca consiste solo nei documenti principali*. I documenti correlati sono visualizzabili
 a partire dal dettaglio del documento principale.
@@ -271,7 +268,7 @@ I filtri utilizzabili sono quelli riportati nell'immagine sottostante e sono ria
 * *data invio*: si può filtrare per la data di invio del documento da parte di NoTI-ER, solo per i documenti inviati.
 
 .maschera di ricerca documenti
-image::images\10.Interfaccia_Web-16d2d.png[]
+image::images\10.Interfaccia_Web-16d2d.png[align=center]
 
 Una volta inseriti i filtri, agendo sul tasto "Rierca" viene elaborata la richiesta e, una volta completata, viene restituita una lista di tutti i documenti
 che rispecchiano i parametri inseriti.
@@ -279,7 +276,7 @@ L'immagina seguente mostra un esempio di lista documenti restituita a seguito di
 
 
 .esempio di visualizzazione lista documenti dalla pagina del monitoraggio
-image::images\10.Interfaccia_Web-d5c3d.png[]
+image::images\10.Interfaccia_Web-d5c3d.png[align=center]
 
 ===== Metastati
 Il ciclo di vita di un documento in NoTI-ER è costituito dall'insieme di tutte le transizioni di stato e delle relative sessioni footnote:[vedi il <<anchor-7, capitolo 8. Processi applicativi.>> ].
@@ -295,9 +292,9 @@ la validazione o lo scarto di ordini inviati ad NSO.
 * *versamento*: metastati che descrivono le fasi di invio in conservazione del documento e l'esito della procedura di versamento.
 
 Ogni metastatato è associato ad una specifica icona, visualizzata nella maschera dei risultati della funzione di monitoraggio. In particolare,
-nella lista dei documenti, a capo della colonna stato, sono riportate un massimo di tre metastati che descrivono la situazione del documento in termini di esito di invio/ricezione, esito di validazione/accettazione, esito di conservazione.
+nella lista dei documenti, a capo della colonna stato, sono riportati un massimo di tre metastati che descrivono la situazione del documento in termini di esito di invio/ricezione, esito di validazione/accettazione, esito di conservazione.
 
-Si rimanda al #_manuale di monitoraggio NoTI-ER_# per la spiegazione e il dettaglio di tutti i metastati possibili.
+Si rimanda al _manuale di monitoraggio NoTI-ER_ per la spiegazione e il dettaglio di tutti i metastati possibili.
 
 
 ===== Dettaglio del documento
@@ -308,7 +305,7 @@ scaricare le versioni XML del file disponibili, visualizzarli attraverso il fogl
 Nella figura sottostante è riportato un esempio di dettaglio documento.
 
 .esempio di visualizzazione "dettaglio documento"
-image::images\10.Interfaccia_Web-52a68.png[]
+image::images\10.Interfaccia_Web-52a68.png[align=center]
 
 Oltre ai *dati principali* del documento, attraverso i tab posti in alto, si può accedere alle sezioni:
 
@@ -316,7 +313,7 @@ Oltre ai *dati principali* del documento, attraverso i tab posti in alto, si pu�
 visualizzarla attraverso foglio di stile e, a sua volta, accedere al dettaglio della notifica.
 * *documenti collegati*: dove sono resi disponibili i documenti collegati al documento principale in oggetto e dove è possibile scaricare il file XML del documento collegato, visualizzarlo attraverso foglio di stile
 e, a sua volta, accedere al dettaglio. Ad esempio, dalla scheda _documenti collegati_ di un DDT si potrà accedere ai dati di un eventuale ordine collegato.
-* *stato*: visualizza una panoramica sugli stati di tutte le sessioni associate al documento e del doucmento stesso. Dà una fotografia di quelli che sono gli stati di sessioni e documento al momento in cui ci si trova.
+* *stato*: visualizza una panoramica sugli stati di tutte le sessioni associate al documento e del documento stesso. Dà una fotografia di quelli che sono gli stati di sessioni e documento al momento in cui ci si trova.
 * *versioni*: sono rese disponibili tutti le versioni dello stesso documento ed è possibie effettuare il download dei file XML dei documenti versionati e dei rispettivi documenti correlati. Ad esempio, quando una fattura viene sovrascritta (_<AccettaChiaeDuplicata> is true_), nella scheda
 _Dati Principali_, sono riportate le informazioni sull'ultima versione, mentre nella scheda _Versioni_ sono presenti i file già sovrascritti.
 * *ticket*: di utilità del supporto tecnico, serve a collegare uno specifico documento ad una richiesta aperta verso il supporto tramite sistema di ticketing.
@@ -352,11 +349,11 @@ _Dati Principali_, sono riportate le informazioni sull'ultima versione, mentre n
 
 ==== Documenti da Versare
 
-La funzione _Documenti da Versare_ permettere di ricevere la lista dei documenti che hanno ricevuto un errore di versamento e si trovano in uno stato VERSATO_KO.  +
+La funzione _Documenti da Versare_ permettere di ricevere la lista dei documenti che hanno ricevuto un errore di versamento e si trovano in uno stato INVIATO_KO sulla sessione di conservazione.  +
 L'immagine seguente mostra la schermata di ricerca, con i filtri impostabili, e il risultato nella lista.
 
 .maschera di ricerca dei Documenti da Versare e lista restituita
-image::images\10.Interfaccia_Web-376d0.png[]
+image::images\10.Interfaccia_Web-376d0.png[align=center]
 
 Come si nota, dalla lista è possibile:
 
@@ -365,19 +362,19 @@ Come si nota, dalla lista è possibile:
 * ripere puntualmente il versamento di un documento attraverso il tasto azione _ripeti versamento_;
 * ripetere massivamente il versamento di documenti tramite i tasti _ripeti tutti i versamenti_ e _ripeti i versamenti selezionati_.
 
-==== Approva Documenti
+==== Approva Documenti [[anchor-9]]
 
 La funzione _Approva Documenti_ permette all'Ente di approvare manualmente i documenti convertiti da NoTI-ER. +
 Questa operazione è utile nel caso in cui sia stato valorizzato a _false_ il tag di _<ApprovazioneAutomatica>_ presente nei metadati di invio documento.  +
 L'immagine seguente mostra la schermata di ricerca con i filtri impostabili, il risultato della ricerca e le possibili operazioni da effettuare.
 
 .maschera di ricerca dei documenti da approvare, lista restituita e operazioni possibili
-image::images\10.Interfaccia_Web-60407.png[]
+image::images\10.Interfaccia_Web-60407.png[align=center]
 
 === Anagrafica
 
 Il menu anagrafica è disponibile per gli utenti con ruoli di amministrazione, gestione anagrafica ruoli e gestione anagrafica. +
-Secondo i sottomenu, è possibile effettuare operazioni su organizzazioni, uffici, utenti e ruoli.
+Seguendo il sottomenu disponibile, è possibile effettuare operazioni su organizzazioni, uffici, utenti e ruoli.
 
 ==== Organizzazioni
 
@@ -385,22 +382,22 @@ Accedendo al sottomenu _organizzazioni_ si possono attivare le funzioni di _cerc
 L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
 
 .maschera di ricerca organizzazioni e lista restituita.
-image::images\10.Interfaccia_Web-92000.png[]
+image::images\10.Interfaccia_Web-92000.png[align=center]
 
 Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio dell'organizzazione in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
 Accedendo all'interno di una specifica organizzazione, si viene re-indirizzati alla scheda _Dati Principali_, dove sono riportate le informazioni anagrafiche come la denominazione, l'indirizzo, CF e P.Iva, il telefono, la PEC, e i dati del referente.
 Inoltre, sono visualizzate e modificabili anche le informazioni riguardanti il certificato utilizzato e i servizi NoTI-ER ai quali l'organizzazione è abilitata, rispettivamente sotto le schede _Certificato_ e _Servizi_.
 
 .scheda dei Servizi all'interno del dettaglio organizzazione
-image::images\10.Interfaccia_Web-80033.png[]
+image::images\10.Interfaccia_Web-80033.png[align=center]
 
 ==== Uffici
 
-Analogamente a quanto descritto per le organizzazioni, è possibile effettuare anche la ricerca e creazione di nuovi uffici attraverso il sottomenu _uffici_.
+Analogamente a quanto descritto per le organizzazioni, è possibile effettuare anche la ricerca e creazione di nuovi uffici attraverso il sottomenu _uffici_. +
 L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
 
 .maschera di ricerca uffici e lista restituita
-image::images\10.Interfaccia_Web-c46ae.png[]
+image::images\10.Interfaccia_Web-c46ae.png[align=center]
 
 Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio dell'ufficio in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
 Accedendo all'interno di uno specifico ufficio, si viene re-indirizzati alla scheda _Dati Principali_, dove sono riportate le informazioni anagrafiche come la l'organizzazione di appartenenza, la denominazione, CF e P.Iva, codice IPA e codice destinatario, l'indirizzo, il telefono, la PEC e i dati del referente. +
@@ -413,7 +410,7 @@ Inoltre, navigando sulle varie schede, sono visualizzate e modificabili anche le
 * *fogli di stile*: viene gestito il versamento dei fogli di stile, per permettere all'ufficio di poter versare i documenti associandoli a dei fogli di stile validi.
 
 .scheda dei Dati Principali all'interno del dettaglio ufficio
-image::images\10.Interfaccia_Web-89024.png[]
+image::images\10.Interfaccia_Web-89024.png[align=center]
 
 ==== Utenti
 
@@ -421,7 +418,7 @@ Questa funzionalità permette ricercare e modificare gli utenti già registrati 
 L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
 
 .maschera di ricerca utenti e lista restituita
-image::images\10.Interfaccia_Web-647fc.png[]
+image::images\10.Interfaccia_Web-647fc.png[align=center]
 
 [NOTE]
 ====
@@ -434,7 +431,7 @@ Inoltre, se ci troviamo in modalità di editing, è presente un tasto _Azioni_ c
 Nella scheda _Uffici_ è possibile visualizzare o modificare le associazioni ufficio / utente.
 
 .scheda dei Dati Principali all'interno del dettaglio utente
-image::images\10.Interfaccia_Web-48767.png[]
+image::images\10.Interfaccia_Web-48767.png[align=center]
 
 
 ==== Ruoli
@@ -443,7 +440,7 @@ Questa sezione permette di verificare quali siano i ruoli attivi per gli utenti 
 L'immagine seguente mostra i filtri impostabili nella ricerca e il risultato restituito in lista.
 
 .maschera di ricerca ruoli e lita restituita
-image::images\10.Interfaccia_Web-177d2.png[]
+image::images\10.Interfaccia_Web-177d2.png[align=center]
 
 Oltre alla funzione _esporta excel_, è possibile, direttamente dalla lista, accedere al dettagio del ruolo in modalità visualizzazione, in modalità modifica o eliminare direttamente il record. +
 Modificare un "ruolo" significa poter cambiare nome, descrizione e cambiare l'associazione con i permessi. +
@@ -459,7 +456,7 @@ La funzione _Cerca Participant ID PEPPOL_ consente di raggiungere in lettura la 
 L'immagine seguente mostra i filtri impostabili nella ricerca e un esempio di risultato restituito in lista.
 
 .maschera di ricerca Participant ID Peppol
-image::images\10.Interfaccia_Web-09020.png[]
+image::images\10.Interfaccia_Web-09020.png[align=center]
 
 La lista può essere esportata in un foglio excel. +
 Inoltre, agendo sul tasto visualizza, in corrispondenza della colonna "Azioni" della lista, si viene re-indirizzati direttamente alla Peppol Directory, in corrispondenza del soggetto selezionato.
@@ -470,7 +467,7 @@ La funzione _Cerca Participant ID PEPPOL su SATER_ consente di raggiungere in le
 L'immagine seguente mostra i filtri impostabili nella ricerca e un esempio di risultato restituito in lista.
 
 .maschera di ricerca Participant ID Peppol su SATER
-image::images\10.Interfaccia_Web-77f1b.png[]
+image::images\10.Interfaccia_Web-77f1b.png[align=center]
 
 L'unica operazione possibile è quella dell'esportazione excel della lista.
 
@@ -480,7 +477,7 @@ La funzione _Lookup Particpant ID_, inserendo un participant ID Peppol, consente
 L'immagine seguente mostra un esempio di risultato di ricerca.
 
 .maschera di lookup participant ID
-image::images\10.Interfaccia_Web-52b9d.png[]
+image::images\10.Interfaccia_Web-52b9d.png[align=center]
 
 Per il participant ID Peppol indicato vengono mostrate le informazioni sui documenti configurati. +
 Nella sezione _output Json e Xml_ è possibile analizzare il file Json o XML del risultato della ricerca su SML.
@@ -497,7 +494,7 @@ I filtri impostabili sono descritti dall'immagine seguente, che riporta un esemp
 Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
 
 .maschera di ricerca Conteggio Documenti e risultato restituito
-image::images\10.Interfaccia_Web-5599d.png[]
+image::images\10.Interfaccia_Web-5599d.png[align=center]
 
 ==== Conteggio Notifiche
 
@@ -506,7 +503,7 @@ I filtri impostabili sono descritti dall'immagine seguente, che riporta un esemp
 Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
 
 .maschera di ricerca Conteggio Notifiche e risultato restituito
-image::images\10.Interfaccia_Web-3737b.png[]
+image::images\10.Interfaccia_Web-3737b.png[align=center]
 
 ==== Stato Documenti
 
@@ -515,7 +512,7 @@ I filtri impostabili sono descritti dall'immagine seguente, che riporta un esemp
 Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
 
 .maschera di ricerca Conteggio per Stato Documenti e risultato restituito
-image::images\10.Interfaccia_Web-496a4.png[]
+image::images\10.Interfaccia_Web-496a4.png[align=center]
 
 ==== Conteggio Organizzazioni
 
@@ -524,7 +521,7 @@ I filtri impostabili sono descritti dall'immagine seguente, che riporta un esemp
 Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
 
 .maschera di ricerca Conteggio Organizzazioni e risultato restituito
-image::images\10.Interfaccia_Web-fa713.png[]
+image::images\10.Interfaccia_Web-fa713.png[align=center]
 
 ==== Elenchi Anagrafici
 
@@ -534,7 +531,7 @@ I filtri impostabili sono descritti dall'immagine seguente, che riporta un esemp
 Si noti come sia possible esportare il risultato in un foglio excel, attraverso il tasto "Esporta Excel".
 
 .maschera di ricerca Elenchi Anagrafici per organizzazioni e risultato restituito.
-image::images\10.Interfaccia_Web-d2e52.png[]
+image::images\10.Interfaccia_Web-d2e52.png[align=center]
 
 ====  Monitoraggio Conservazione
 
@@ -549,7 +546,7 @@ L'immagine seguente mostra quali sono i fltri impostabili e riporta un esempio d
 Si noti come sia possibile esportare il risultato della ricerca in un foglio excel, attraverso il tasto "Esporta Excel". Inoltre, agendo sul tasto "Invia Email a PARER" si comunica direttamente a ParER il risultato della ricerca.
 
 .maschera di Riepilogo dei documenti in conservazione e risultato restituito
-image::images\10.Interfaccia_Web-d948b.png[]
+image::images\10.Interfaccia_Web-d948b.png[align=center]
 
 ===== Documenti da Integrare
 
@@ -559,7 +556,7 @@ Si noti come sia possibile esportare il risultato totale della ricerca in un fog
 Inoltre, agendo sul tasto "Invia Email ai Referenti" si procede all'invio di una comunicazione con il report e il promemoria all'integrazione ai referenti assocati all'organizzazione.
 
 .maschera di Riepilogo dei Documenti da Integrare e risultato restituito
-image::images\10.Interfaccia_Web-4d366.png[]
+image::images\10.Interfaccia_Web-4d366.png[align=center]
 
 ===== Documenti in Errore
 
@@ -569,7 +566,7 @@ Si noti come sia possibile esportare il risultato totale della ricerca in un fog
 Inoltre, agendo sul tasto "Invia Email ai Referenti" si procede all'invio di una comunicazione con il report e il promemoria alla correzione degli errori ai referenti assocati all'organizzazione.
 
 .maschera di Riepilogo dei Documenti in Errore Conservazione
-image::images\10.Interfaccia_Web-18312.png[]
+image::images\10.Interfaccia_Web-18312.png[align=center]
 
 === Gestione e Amministrazione
 
@@ -581,7 +578,7 @@ Le funzionalità di _Amministrazione_ sono utilizzabili dalle utenze con ruolo _
 * *Job Monitoring*: permette di verificare il corretto funzionamento dei job di NoTI-ER e la possibilità di agire manualmente su di essi per interromperne o avviarne l'attività.
 * *Configurazione NoTIER*: permette di visualizzare il valore di determinati parametri di configurazione di NoTI-ER.
 
-Le funzionalità di _Gestione_ sono utilizzabili, oltre che dall'utente amministratore, anche da chi possiede rispettivamente i ruoli di _Gestione Fogli di Stile_, _Gestione Bacheca Notizie_ e _Gestione SMP_:
+Le funzionalità di _Gestione_ sono utilizzabili da chi possiede rispettivamente i ruoli di _Gestione Fogli di Stile_, _Gestione SMP_ e _Gestione Bacheca Notizie_:
 
 * *Fogli di Stile* si divide in:
 **  _Cerca Foglio di Stile_ permette di ricercare e scaricare i fogli di stile filtrando per tipo documento, tipo formato e fogli attivi (possono essere ricercate tutte le versioni dei fogli di stile utilizzate da NoTI-ER).

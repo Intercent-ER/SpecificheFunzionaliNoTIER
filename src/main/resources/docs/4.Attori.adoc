@@ -10,12 +10,12 @@ del Servizio Sanitario Regionale, etc.
 * Enti che possono aderire al SiCiPa-ER: Enti locali, Consorzi, Istituti di Istruzione Scolastica, etc.
 
 Inoltre, è importante tenere conto del livello di granularità adottato dai sistemi con i quali NoTI-ER si interfaccia, per risolvere univocamente
-gli emittenti e destinatari dei Documenti nell’ambito del relativo flusso dei messaggi. +
+gli emittenti e destinatari dei documenti nell’ambito del relativo flusso dei messaggi. +
 In particolare, *SdI* utilizza il codice previsto dal *registro iPA* univocamente assegnato alle singole
 unità organizzative degli Enti iscritti, ad esempio gli uffici preposti alla fatturazione footnote:[in generale, il codie iPA è una stringa di 6 caratteri. Ad esempio: UFDPCJ.]. +
 Allo stesso modo, *Peppol* specifica che i documenti in transito sulla relativa infrastruttura (BusDox) siano
 accompagnati da un set di metadati obbligatori, tra i quali l’*identificativo univoco* previsto dalle
-specifiche footnote:[In generale l’Id Peppol è una stringa composta nel formato “xxxx:xxxxxxx”. Ad esempio 9907:1234567890] che identifica un mittente/destinatario di un generico documento UBL.
+specifiche footnote:[in generale l’Id Peppol è una stringa composta nel formato “xxxx:xxxxxxx”. Ad esempio 9907:1234567890] che identifica un mittente/destinatario di un generico documento UBL.
 
 Per rispettare i vincoli di genericità, e allo stesso tempo supportare il livello di granularità previsto
 da SdI, in NoTI-ER è stato definito un modello a *due livelli gerarchici* per descrivere gli attori client,
@@ -36,7 +36,7 @@ garantendo la separazione dei flussi documentali in transito - i quali vengono a
 univoco dell'_ufficio_ (*Id NoTI-ER*) - e la possibilità di "isolare" il monitoraggio a livello di singoli flussi.
 
 .profilo di integrazione lato client fra NoTI-ER e i vari attori.
-image::images\4.Attori-b4581.png[]
+image::images\4.Attori-b4581.png[align=center]
 
 Sull’ufficio vengono quindi fatti “collassare” anche gli identificativi univoci iPA e Peppol, necessari
 per il corretto instradamento dei flussi documentali sui relativi sistemi. Tali identificativi saranno
@@ -44,3 +44,9 @@ però del tutto trasparenti per l’ufficio stesso. +
 Perciò, l'_ufficio_ si identifica in NoTI-ER solamente tramite un *identificativo univoco* assegatogli in fase di registrazione (tale *Id NoTI-ER*).
 In seguito, a seconda del tipo di processo, sarà NoTI-ER stesso a "riconciliare" l'Id NoTI-ER con l'identificativo
 di trasmissione richiesto dal flusso in atto (iPA o Peppol).
+
+[NOTE]
+====
+Per quanto riguarda l'integrazione con i soggetti di SATER, che utilizzano l'Access Point di NoTi-ER, questi vengono gestiti dal punto di vista operativo in totale analogia a quello che avviene per gli iscritti a NoTI-ER. +
+In particolare, ad ogni soggetto di SATER è assegnato un ID NoTI-ER e ciascuno di loro è associato ad un organizzazione madre denominata "Piattaforma". In questo modo, SATER può gestire l'integrazione client con NoTI-ER e poi provvedere alla gestione interna del flusso documentale.
+====

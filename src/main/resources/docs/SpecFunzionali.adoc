@@ -1,7 +1,7 @@
 = *Specifiche funzionali NoTI-ER*
 
 Autore: Intercent-ER +
-Ultimo aggiornamento: 13-10-2020
+Ultimo aggiornamento: 14-10-2020
 
 :doctype: book
 :encoding: utf-8

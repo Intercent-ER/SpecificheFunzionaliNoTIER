@@ -35,7 +35,7 @@ Inoltre, in un'ottica di integrazione con SATER footnote:[vedi <<anchor-6, parag
 === Metadati
 
 Per garantire la _statefulness_ delle singole invocazioni, i servizi di NoTI-ER basati sulle chiamate di tipo _POST_ richiedono che
-oltre al documento venga inviato anche un apposito file dei _metadati_ footnote:[anche i file dei metadati seguono uno specifico schema XSD definito a priori]. +
+oltre al documento venga inviato anche un apposito file dei _metadati_ footnote:[anche i file dei metadati seguono uno specifico schema XSD definito a priori.]. +
 Il file dei metadati è un file XML accessorio che consente a NoTI-ER di:
 
 . verificare l'identità ed il ruolo dell'_ufficio emittente_, attraverso l'*id NoTI-ER* specificato;
@@ -66,4 +66,4 @@ vengono aggiunte alla request e vengono utilizzate per effettuare la fase succes
 La fase di *autorizzazione* dipende dal servizio che viene invocato ed esegue tutta una serie di controlli sulla congruenza dei dati da elaborare e sulle abilitazioni del soggetto.
 
 .client authentication per i servizi REST
-image::images\9.Servizi-c4b76.png[]
+image::images\9.Servizi-c4b76.png[align=center]

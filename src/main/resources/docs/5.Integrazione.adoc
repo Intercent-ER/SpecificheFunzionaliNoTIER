@@ -1,12 +1,12 @@
 == Integrazione (((5.Integrazione)))
 
 Per garantire la corretta gestione del processo applicativo che regola i flussi
-documentali in transito su NoTI-ER, in base ai requisiti specificati al _Capitolo 3_,
+documentali in transito su NoTI-ER, in base ai requisiti specificati al <<anchor-8, capitolo 3>>,
 è stata realizzata una forte integrazione con sistemi del tutto eterogenei tra loro,
-quali il *SdI*, il servizio di versamento in conservazione *ParER*, l’infrastruttura *Peppol* (BusDox) e *NSO* e, infine, *SATER*.  +
+quali il Sistema di Interscambio *SdI*, il servizio di versamento in conservazione *ParER*, l’infrastruttura *Peppol* (BusDox), il Nodo Smistamento Ordini *NSO* e, infine, la piattaforma *SATER*.  +
 Tale integrazione, pur aumentando la complessità a livello applicativo e di processo di NoTI-ER,
-ha consentito di rendere l’iterazione con essi completamente trasparente lato client.
-Il client è tenuto ad implementare le _specifiche tecniche dei servizi_ di NoTI-ER e a conoscere i
+ha consentito di rendere l’iterazione con essi completamente trasparente. +
+Il client è tenuto ad implementare le *specifiche tecniche dei servizi* di NoTI-ER e a conoscere i
 relativi processi applicativi. Allo stesso tempo, il client deve essere in grado di gestire i formati
 utilizzati per rappresentare i documenti (es. il formato XML che descrive l’esito di versamento di ParER).
 
@@ -16,7 +16,7 @@ utilizzati per rappresentare i documenti (es. il formato XML che descrive l’es
 Il Sistema di Interscambio prevede un _flusso di messaggi_ articolato, come descrtto in figura sottostante.
 
 .flusso dei messaggi di SdI
-image::images\5.Integrazione-93f4f.png[]
+image::images\5.Integrazione-93f4f.png[align=center]
 
 È importante notare come NoTI-ER si ponga *intermediario completo nei confronti di SdI*,
 implementando sie le funzioni di _trasmissione_ che di _ricezione_.
@@ -26,9 +26,8 @@ che prevedono l’implementazione di due *Web Services SOAP* deputate all’ inv
 Si noti, inoltre, che le specifiche di servizio SdI impongono che le fatture trasmesse (e ricevute) nel formato FatturaPA siano firmate tramite un
 *Certificato di Firma Elettronica Qualificata* secondo i formati *CAdES-BES* o *XAdES-BES* previsti dalle direttive *AgID* footnote:[Agenzia per l’Italia Digitale. Si veda il sito http://www.agid.gov.it/].
 
-Per raccordare i vari documenti del flusso, in particolare _fatture_ e relative _notifiche_, SdI associa
-inoltre ad ogni documento in ingresso un *identificativo numerico univoco*, detto *identificativo SdI*
-utilizzato come riferimento per le successive notifiche. Tale identificativo viene comunicato da SdI
+Per raccordare i vari documenti del flusso, in particolare _fatture_ e relative _notifiche_, SdI associa ad ogni documento in ingresso un *identificativo numerico univoco*, detto *identificativo SdI*
+che viene utilizzato come riferimento per le successive notifiche. Tale identificativo viene comunicato da SdI
 a NoTI-ER in fase di invio (o ricezione) di una fattura e opportunamente salvato.
 
 === Integrazione con Peppol
@@ -46,10 +45,12 @@ con il _Nodo di Smistamento Ordini_, per la gestione dell'*ordine elettronico*, 
 intermediazione per le _Pubbliche Amministrazioni_ della regione Emilia-Romagna - si interfaccia con NSO in uno
 scenario di *validazione* dei documenti.
 
-Il canale di trasmissione degli _ordini elettronici_ fra PA e suo fornitore avviene
+La trasmissione degli _ordini elettronici_ fra PA e suo fornitore avviene
 per tramite della rete Peppol. In corrispondenza dell'invio di un documento verso l'_Access Point_ del destinatario,
 NoTI-ER provvede ad inoltrare lo stesso anche ad NSO, che effettua i controlli necessari e, a sua volta, comunica l'esito
-di validazione a NoTI-ER stesso.
+di validazione a NoTI-ER stesso. +
+Anche in questo caso, NSO associa ad ogni documento in ingresso un *identificativo numerico univoco*, detto *identificativo NSO*
+che viene utilizzato come riferimento per le successive notifiche.
 
 === Integrazione con SATER
 [[anchor-6]]
@@ -73,26 +74,26 @@ la visualizzazione, l'invio e la ricezione di DDT, ordini e fatture e dei relati
 
 Le modalità di versamento in *Conservazione* previste dalle specifiche tecniche di ParER prevedono
 la creazione di una *Unità Documentaria* in cui vengono inseriti tutti i componenti di un singolo
-flusso documentale.
+flusso documentale. +
 In particolare, se si considera come riferimento il flusso specificato da SdI, si effettua in una prima
 fase il versamento di un _documento principale_ (fattura nel formato FatturaPA firmata) e in fasi
 successive quello di tutte le _notifiche SdI_ (consegna, scarto, esito, etc.) ad esso correlate, in
 qualità di *annessi* del documento principale.
 Il versamento del documento principale e le successive aggiunte di allegati dell’Unità
-Documentale avvengono in determinate fasi dei processi di e-Procurement gestiti da NoTI-ER.
+Documentale avvengono in determinate fasi dei processi di e-Procurement gestiti da NoTI-ER. +
 ParER, inoltre, richiede che all’atto del versamento siano indicati alcuni dati specifici di
 *Integrazione Fiscale*. Tali dati sono estratti direttamente dal documento, oppure vengono inviati dall’
-utente a seconda del Processo di e-Procurement footnote:[si veda il capitolo dedicato all'integrazione in NoTI-ER dei _dati fiscali_ per il versamento in conservazione.].
+utente a seconda del Processo di e-Procurement footnote:[si veda il paragrafo <<anchor-2, 7.2.4. Fase di integrazione fiscale>>, dedicato all'integrazione in NoTI-ER dei _dati fiscali_ per il versamento in conservazione.].
 
 
 === Validazione e Transcodifica
 
-Come specificato nei capitoli precedenti, NoTI-ER adotta UBL come formato XML di riferimento
+Come specificato nei capitoli precedenti, NoTI-ER adotta UBL, nelle sue versioni di UBL BIS2.1 e UBL BIS_3, come formato XML di riferimento
 per rappresentare i documenti di e-Procurement. +
-Esistono precsi standard che descrivono come deve essere composto un documento UBL,
+Esistono precisi standard che descrivono come deve essere composto un documento UBLfootnote:[si veda https://peppol-docs.agid.gov.it/ per le specifiche dei documenti BIS_3 e https://intercenter.regione.emilia-romagna.it/noti-er-ordini-ddt-fatture/specifiche-tecniche/peppol-bis-2-1 per le specifiche dei documenti in formato UBL BIS 2.1.],
 con riferimento sia a regole sintattiche (quali campi valorizzare in base al relativo schema XSD)
-e semantiche (come tali campi devono essere valorizzati). +
-NoTI-ER integra una logica che esegue entrambe le validazioni di tutti i documenti UBL
+sia a regole semantiche (come tali campi devono essere valorizzati). +
+NoTI-ER integra una logica che esegue entrambe le validazioni sui documenti UBL
 in transito sul sistema.
 
 * *validazione sintattica*: il documento viene validato sullo schema *XSD* UBL di riferimento (Invoice, CreditNote, etc.)
@@ -111,7 +112,7 @@ A questo punto, esistono in NoTI-ER due tipologie di *transcodifica*:
 
 Per entrambi i tipi, il documento viene sottoposto ad una trasformazione XSLT che lo converte da un formato ad un altro.
 
-Al termine del processo di transcodifica, NoTI-ER esegue sempre la validazione del documento risultante
+Infine, al termine del processo di transcodifica, NoTI-ER esegue sempre la validazione del documento risultante.
 
 * *UBL-> _fatturaPA_*: si esegue la validazione XSD del file.
 * *_fatturaPA_ -> UBL*: si esegue la doppia validazione (XSD + SCH) del file.
@@ -120,15 +121,14 @@ Al termine del processo di transcodifica, NoTI-ER esegue sempre la validazione d
 
 SdI richiede che il file in formato _fatturaPA_ sia dotato di *firma elettronica
 qualificata*, pertanto in NoTI-ER è stata integrata una logica che prevede che
-il file in _fatturaPA_, risultante dal processo di transcodifica da UBL, sia firmato
-utilizzando un’apposita funzione disponibile nell’interfaccia WEB footnote:[Applet di firma e kit di firma con lettura del certificato da SmartCard.]. +
+il file in _fatturaPA_, risultante dal processo di transcodifica da UBL, sia firmato footnote:[Applet di firma e kit di firma con lettura del certificato da SmartCard.]. +
 La firma di tutte le fatture in formato FatturaPA viene effettuata da
 Intercent-ER ed il successivo invio a SdI è condizionato all’approvazione
 dell’ufficio emittente della fattura UBL originale, che può essere:
 
 * *automatico*: all'atto dell'invio del documento, l'ufficio emittente stesso autorizza NoTI-ER
 ad inviare la fattura a SdI immediatamente dopo la firma;
-* *manuale*: l'ufficio approva manualmente footnote:[tramite apposita funzione dell'interfaccia Web.]
+* *manuale*: l'ufficio approva manualmente footnote:[tramite apposita funzione dell'interfaccia Web, vedi il paragrafo <<anchor-9, 10.7.3. Approva documenti>>.]
 l'invio a SdI, dopo aver validato personalmente il risultato della transcodifica da UBL a _fatturaPA_.
 
 === Visualizzazione documenti

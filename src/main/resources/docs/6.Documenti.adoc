@@ -8,24 +8,24 @@ I *documenti* sono gli oggetti che NoTI-ER tratta e di cui si fa carico. Questi 
 * *rappresentazione*: XML base o XML firmato CaDES/XAdES;
 * *classificazione*: principale o correlato.
 
-La tabella seguente mostra i tipi documento attualmente gestiti da NoTI-ER footnote:[alla data di Maggio 2020],
-ognuno con le proprie caratteristiche.
+La tabella seguente mostra i tipi documento gestiti da NoTI-ER,
+e le proprie caratteristiche.
 
 .Tipi Documento gestiti da NoTI-ER e relative rappresentazioni.
-[width="75%",cols=",^,^,^,^">,options="header,footer"]
+[width="100%",cols=",^,^,^,^">,options="header,footer"]
 |===
 |TIPO ^|FORMATO|VERSIONE|RAPPRESENTAZIONE|CLASSIFICAZIONE
 s|Attestazione di file non recapitabile ^.^| _fatturaPA_ ^.^| 1.0 ^.^| XAdES ^.^| correlato
-1.3+.^s|Documento di Trasporto ^.^| UBL BIS 2.1 ^.^| 2.1 ^.^| XML .3+^.^| principale
+1.3+.^s|Documento di Trasporto ^.^| UBL BIS 2.1 ^.^| 2.1 ^.^| XML 1.3+^.^| principale
 ^.^|UBL BIS 3.0. ^.^| 2.1. ^.^| XML
 ^.^|UBL EU ^.^| 2.1. ^.^| XML
 s| Esito di Conservazione ^.^| PARER ^.^| 1.4 ^.^| XML ^.^| correlato
-1.3+.^s|Fattura ^.^| UBL BIS 2.1. ^.^| 2.1. ^.^| XML  .3+^.^| principale
+1.3+.^s|Fattura ^.^| UBL BIS 2.1. ^.^| 2.1. ^.^| XML  1.3+^.^| principale
 ^.^|UBL EU ^.^| 2.1. ^.^| XML
-^.^| _fatturaPA_ ^.^| 1.2. ^.^| XML, CAdES, XAdES
-1.3+.^s|Nota di Credito ^.^| UBL BIS 2.1. ^.^| 2.1. ^.^| XML  .3+^.^| principale
+^.^| _fatturaPA_ ^.^| 1.2.1 ^.^| XML, CAdES, XAdES
+1.3+.^s|Nota di Credito ^.^| UBL BIS 2.1. ^.^| 2.1. ^.^| XML  1.3+^.^| principale
 ^.^|UBL EU ^.^| 2.1. ^.^| XML
-^.^| _fatturaPA_ ^.^| 1.2. ^.^| XML, CAdES, XAdES
+^.^| _fatturaPA_ ^.^| 1.2.1 ^.^| XML, CAdES, XAdES
 s| Notifica Consegna MDN ^.^| UBL BIS 2.1. ^.^| 1.1 ^.^| XML ^.^| correlato
 .^s|Notifica di Decorrenza termini ^.^|_fatturaPA_ ^.^| 1.0 ^.^| XAdES ^.^| correlato
 .^s|Notifica di Scarto ^.^|_fatturaPA_ ^.^| 1.0 ^.^| XAdES ^.^| correlato
@@ -34,7 +34,7 @@ s|Notifica di Esito Cedente ^.^| _fatturaPA_ ^.^| 1.0. ^.^| XAdES ^.^| correlato
 s|Notifica Esito Committente ^.^| _fatturaPA_ ^.^| 1.0. ^.^| XML ^.^| correlato
 s|Notifica di Mancata Consegna ^.^| _fatturaPA_ ^.^| 1.0. ^.^| XAdES ^.^| correlato
 s|Notifica Metadati file Fattura ^.^| _fatturaPA_ ^.^| 1.0. ^.^| XML ^.^| correlato
-1.3+.^s|Ordine ^.^| UBL BIS 2.1 ^.^| 2.1 ^.^| XML .3+^.^| principale
+1.3+.^s|Ordine ^.^| UBL BIS 2.1 ^.^| 2.1 ^.^| XML 1.3+^.^| principale
 ^.^|UBL BIS 3.0. ^.^| 2.1. ^.^| XML
 ^.^|UBL EU ^.^| 2.1. ^.^| XML
 s|Ricevuta di Consegna ^.^| _fatturaPA_ ^.^| 1.0. ^.^| XAdES ^.^| correlato
@@ -45,12 +45,12 @@ La classificazione viene introdotta in conformità con il _flusso dei messaggi_
 previsto da SdI -secondo il quale ad una _fattura_ vengono correlate un certo numero
 di _notifiche_, che giungono successivamente all'invio della stessa e sono "raccordate" dall'_Identificativo SdI_ -, da Peppol - dal quale
 si riceve un _MDN_ footnote:[Message Disposition Notification, dal quale poi si costruisce l'effettiva _notifica MDN_]-
-e da NSO - che comunica l'esito della validazione footnote:[l'esito della validazione da parte di NSO è gestito da NoTI-ER con una _Ricevuta di consegna_ se positivo, con una _notifica di scarto_ se negativo.].
+e da NSO - che comunica l'esito della validazione, sempre in relazione ad un _Identificativo NSO_ footnote:[l'esito della validazione da parte di NSO è gestito da NoTI-ER con una _Ricevuta di consegna_ se positivo, con una _notifica di scarto_ se negativo.].
 
 
 === Chiave logica e URN
 
-Tutti i documenti gestiti da NoTI-ER vengono idendificati con una *chiave logica*
+Tutti i documenti gestiti da NoTI-ER vengono identificati con una *chiave logica*
 composta secondo i parametri:
 
 * Id NoTI-ER emittente;
@@ -68,7 +68,7 @@ Tale URN viene composto a partire dalla chiave logica, come segue:
 
 Un esempio: _urn:notier:AAOSPCN_01_Uff_eFatturaPA:2020:L1E_20202000000222:CA:FATTURA_
 
-[CAUTION]
+[NOTE]
 ====
 Per convenzione, i *documenti correlati* (*le notifiche*) ereditano la chiave logica
 del documento principale, a meno del _tipo documento_, che viene sostituito con
@@ -81,7 +81,7 @@ Un esempio: _urn:notier:AAOSPCN_01_Uff_eFatturaPA:2020:L1E_2020200000222_5fNDT:C
 ==== Chiave logica nei processi di Inbound SdI e NSO
 
 Al fine di evitare possibili collisioni di _chiave logica_ nel _Ciclo Passivo_, dovute alle
-peculiarità delle specifiche tecniche di [underline]#*SdI*#, il _numero del documento_ (fattura o nota di credito) viene elaborato come segue:
+peculiarità delle specifiche tecniche di *SdI*, il _numero del documento_ (fattura o nota di credito) viene elaborato come segue:
 
 * *numero nella _chiave logica_*: numero fattura + "_" + decodifica SdI del tipo documento footnote:[per le decodifiche si consiglia di fare riferimento alle Specifiche tecniche di SdI.]. +
 Un esempio: *0002_TD01*.
@@ -92,7 +92,7 @@ Un esempio: *0002_123456*
 
 L'URN dei documenti riflette direttamente la situazione appena illustrata sulla _chiave logica_. Esempio: _urn:notier:uff01_fatturapa:2015:0002_TD01:CA:FATTURA_.
 
-Ulteriormente, lato [underline]#*NSO*#, l'URN degli *ordini BIS 3.0.* che sono destinati agli utenti iscritti a NoTI-ER
+Ulteriormente, lato *NSO*, l'URN degli *ordini BIS 3.0.*, destinati agli utenti iscritti a NoTI-ER,
 viene calcolato secondo lo schema: +
 [.text-center]
 _urn:notier:{id NoTI-ER mittente}:{*data documento*}:{numero documento}:{tipo ciclo}:{tipo documento}_
@@ -131,7 +131,7 @@ e di tutti gli attori coinvolti nella gestione di ogni singolo documento transit
 === Versionamento
 
 NoTI-ER supporta la possibilità di *sovrascrivere* un documento preesistente previo il suo versionamento. +
-In particolare, nel momento in cui un documento che deve essere sovrascritto entra in NoTI-ER,
+In particolare, nel momento in cui un documento che deve andare a sovrascriverne un altro entra in NoTI-ER,
 vengono effettuate le seguenti azioni:
 
 * salvataggio di *stati* e *sessioni* del documento da sovrascrivere;
@@ -142,7 +142,7 @@ vengono effettuate le seguenti azioni:
 Si noti che la sovrascrittura non è sempre ammessa da NoTI-ER, ma è vincolata a
 precisi requisiti che deve avere il documento a seconda della fase in cui si trova.
 
-[CAUTION]
+[NOTE]
 ====
 .Ordini BIS 3.0. in uscita verso NSO
 Per i documenti in transito da e verso NSO, non è ammesso in alcun modo il versionamento. +

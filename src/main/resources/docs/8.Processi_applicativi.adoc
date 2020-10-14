@@ -8,24 +8,27 @@ di processo di e-Procurement  (Inbound o Outbound) e dall'instradamento da e ver
 Per rappresentare le varie fasi del processo di e-Procurement in cui un documenti si trova, è stato definito un insieme numerabile di *stati*. +
 La sequenza di tutte le *transizioni tra stati* che un documento ha trascorso costituisce il _ciclo di vita dello stesso in NoTI-ER_. +
 A partire dall'insieme complessivo di _stati_, sono state individuate alcune _collezioni_ che vengono chiamate *sessioni*. In particolare,
-le _sessioni_ di un documento sono _collezioni di stati che descrivono il transito di un documento in NoTI-ER declinato in una specifica direzione._ +
+le _sessioni_ di un documento sono *collezioni di stati* che descrivono il transito di un documento in NoTI-ER declinato in una specifica direzione.
+
 Pertanto, un documento è associato in maniera _mutualmente esclusiva_ ad una:
 
 * *sessione di invio*: insieme di tutti gli stati che descrivono il processo di Outbound, in cui un documento viene emesso da un soggetto iscritto a NoTi-ER
-e instradato verso verso il sistema di destinazione.
-* *sessione di ricezione*: insieme di tutti gli stati che descrivono il processo di Inbound, in cui NoTI-ER riceve un documento, proveniente da SdI o Peppol, per poter essere messo
+e instradato verso il sistema di destinazione (SdI, Peppol).
+* *sessione di ricezione*: insieme di tutti gli stati che descrivono il processo di Inbound, in cui NoTI-ER riceve un documento, proveniente da SdI o Peppol, che deve essere messo
 a disposizione dell'ufficio ricevente.
 
-Entrambe le sessioni si scindono in riferimento al sistema di integrazione. Avremo, dunque, delle sessioni di invio e di ricezione _da e verso SdI_, oppure _da e verso Peppol._ +
+Entrambe le sessioni si scindono in riferimento al sistema di integrazione. Avremo, dunque, delle sessioni di invio e di ricezione _da e verso SdI_, oppure _da e verso Peppol._
+
 A queste si possono aggiungere:
 
-* #*sessione di invio a NSO*#: è una sessione complementare alla _sessione di invio_ e comprende gli stati che descrivono il processo di scambio con NSO.
-In particolare, un ordine emesso da una Azienda Sanitaria, che viene inviato al destinatario su rete Peppol,
+* *sessione di invio a NSO*: è una sessione complementare alla _sessione di invio_ verso Peppol e comprende gli stati che descrivono il processo di scambio con NSO.
+In particolare, un ordine UBL BIS 3.0 emesso da una Azienda Sanitaria, che viene inviato al destinatario su rete Peppol,
 viene contemporaneamente inviato anche ad NSO per adempiere agli obblighi di validazione previsti. footnote:[vedi il <<anchor-4, paragrafo 5.3. Integrazione con NSO.>>]
+* *sessione di ricezione NSO*: è la sessione che si associa ai documenti che attestano l'esito di validazione dell'Ordine precedentemente inviato ad NSO. Gli unici due tipi documento che possono avere questa sessione sono la _notifica di scarto_ e la _ricevuta di consegna_.
 * *sessione di conservazione*: è l'insieme degli stati che descrivono il versamento in ParER di un documento, indipendentemente dal processo di e-Procurement.
 
 Ulteriormente, considerato che il ciclo di vita di un documento non termina con il singolo transito su NoTI-ER, ma prosegue a seguito dell'integrazione con gli altri sistemi,
-sono state definite _collezioni di stati specifici del documento stesso_, sempre in riferimento
+sono state definite delle *collezioni di stati specifici del documento stesso*, sempre in riferimento
 alla direzione di instradamento.
 
 Nei paragrafi che seguono, viene mostrata una panoramica di quelli che sono gli stati associati ad ogni sessione, a livello di _stato della sessione_ e di _stato del documento_ corrispondente.
@@ -36,7 +39,7 @@ La tabella sottostante mostra tutti gli _stati_ associati al dominio _sessione d
 stato della sessione e il relativo _stato del documento_.
 
 .Sessione di invio e relativi stati
-[width="85%",cols="^,^,^,^">,options="header,footer"]
+[width="100%",cols="^,^,^,^">,options="header,footer"]
 |===
 |Stato ^|Tipo Stato| Descrizione Stato | Stato Documento
 ^.^|DA_TRASFORMARE ^.^|INIZIALE ^.^| Documento da trasformare da formato UBL a formato SdI ^.^|IN_ELABORAZIONE
@@ -49,18 +52,32 @@ NON_ACCETTATO
 IN_ELABORAZIONE
 ^.^|SCARTATO ^.^|FINALE_INTERMEDIO ^.^| Documento SdI firmato scartato ^.^| ELABORATO_KO +
 IN_ELABORAZIONE
-^.^|INVIATO_SDI ^.^|FINALE_INTERMEDIO ^.^| Documento SdI inviato a SdI ^.^| x
-^.^|DA_INOLTRARE_BUSDOX ^.^|INIZIALE ^.^| Documento da inoltrare su rete Peppol ^.^| x
-^.^|ATTESA_VALIDAZIONE ^.^|INIZIALE ^.^| Documento in attesa di esito da NSO prima di essere inoltrato su Peppol ^.^| x
-^.^|BLOCCATO_DA_NSO ^.^|FINALE ^.^| Documento bloccato a fronte della ricezione dell'esito di validazione negativo da NSO ^.^| x
-^.^|INVIATO_BUSDOX ^.^|FINALE ^.^| Documento inoltrato su rete Peppol ^.^| x
-^.^|NON_INVIATO_BUSDOX ^.^|FINALE ^.^| Documento non inoltrato correttamente su rete Peppol causa anomalia applicativa ^.^| x
-^.^|DA_INVIARE_NSO ^.^|INIZIALE ^.^| Documento da inviare verso NSO ^.^| x
-^.^|INVIATO_NSO ^.^|INTERMEDIO ^.^| Documento inviato a NSO ^.^| x
-^.^|CONSEGNATO_NSO ^.^|FINALE ^.^|Documento consegnato a NSO e validato dallo stesso ^.^| x
-^.^|SCARTATO_NSO ^.^|FINALE ^.^| Documento inviato ad NSO e scartato dallo stesso ^.^| x
-^.^|NON_INVIATO_NSO ^.^|FINALE ^.^| Documento non inviato NSO causa anomalia applicativa ^.^| x
-^.^|DA_NON_INVIARE_NSO ^.^|FINALE ^.^| Documento da non inviare a NSO ^.^| x
+^.^|INVIATO_SDI ^.^|FINALE_INTERMEDIO ^.^| Documento SdI inviato a SdI ^.^| NON_CONSEGNATO +
+INVIATO_SDI +
+CONSEGNATO +
+ACCETTATO +
+NON_ACCETTATO
+^.^|DA_INOLTRARE_BUSDOX ^.^|INIZIALE ^.^| Documento da inoltrare su rete Peppol ^.^| IN_ELABORAZIONE
+^.^|ATTESA_VALIDAZIONE ^.^|INIZIALE ^.^| Documento in attesa di esito da NSO prima di essere inoltrato su Peppol ^.^| IN_ELABORAZIONE
+^.^|BLOCCATO_DA_NSO ^.^|FINALE ^.^| Documento bloccato a fronte della ricezione dell'esito di validazione negativo da NSO ^.^| ELABORATO_KO
+^.^|INVIATO_BUSDOX ^.^|FINALE ^.^| Documento inoltrato su rete Peppol ^.^| IN_ELABORAZIONE +
+INVIATO_BUSDOX
+^.^|NON_INVIATO_BUSDOX ^.^|FINALE ^.^| Documento non inoltrato correttamente su rete Peppol causa anomalia applicativa ^.^| ELABORATO_KO
+^.^|DA_INVIARE_NSO ^.^|INIZIALE ^.^| Documento da inviare verso NSO ^.^| IN_ELABORAZIONE
+^.^|INVIATO_NSO ^.^|INTERMEDIO ^.^| Documento inviato a NSO ^.^| IN_ELABORAZIONE +
+INVIATO_BUSDOX
+^.^|CONSEGNATO_NSO ^.^|FINALE ^.^|Documento consegnato a NSO e validato dallo stesso ^.^| IN_ELABORAZIONE +
+ELABORATO_KO +
+INVIATO_BUSDOX
+^.^|SCARTATO_NSO ^.^|FINALE ^.^| Documento inviato ad NSO e scartato dallo stesso ^.^| IN_ELABORAZIONE +
+ELABORATO_KO +
+INVIATO_BUSDOX
+^.^|NON_INVIATO_NSO ^.^|FINALE ^.^| Documento non inviato NSO causa anomalia applicativa ^.^| IN_ELABORAZIONE +
+ELABORATO_KO +
+INVIATO_BUSDOX
+^.^|DA_NON_INVIARE_NSO ^.^|FINALE ^.^| Documento da non inviare a NSO ^.^| IN_ELABORAZIONE +
+ELABORATO_KO +
+INVIATO_BUSDOX
 ^.^| ^.^| ^.^|  ^.^|
 |===
 
@@ -71,14 +88,22 @@ La tabella sottostante mostra tutti gli _stati_ associati al dominio _sessione d
 stato della sessione e il relativo _stato del documento_.
 
 .Sessione di ricezione e relativi stati
-[width="85%",cols="^,^,^,^">,options="header,footer"]
+[width="100%",cols="^,^,^,^">,options="header,footer"]
 |===
 |Stato ^|Tipo Stato| Descrizione Stato | Stato Documento
-^.^|DA_TRASFORMARE ^.^|INIZIALE ^.^| Documento da trasformare da SdI a UBL  ^.^|
-^.^|TEMPORANEO_INBOUND ^.^|INIZIALE ^.^| Documento ricevuto con problematiche sulla validazione  ^.^|
-^.^|DA_RECAPITARE ^.^|INIZIALE ^.^| Documento da recapitare a soggetto  ^.^|
-^.^|RECAPITATO ^.^|FINALE ^.^| Documento recapitato al soggetto  ^.^|
-^.^|NON_VALIDO ^.^|FINALE ^.^| Documento non valido  ^.^|
+^.^|DA_TRASFORMARE ^.^|INIZIALE ^.^| Documento da trasformare da SdI a UBL  ^.^| IN_ELABORAZIONE
+^.^|TEMPORANEO_INBOUND ^.^|INIZIALE ^.^| Documento ricevuto con problematiche sulla validazione  ^.^| IN_ELABORAZIONE
+^.^|DA_RECAPITARE ^.^|INIZIALE ^.^| Documento da recapitare a soggetto  ^.^| ELABORATO_OK +
+IN_ELABORAZIONE +
+NOTIFICATO_DA_SDI +
+RICEVUTO_NSO
+^.^|RECAPITATO ^.^|FINALE ^.^| Documento recapitato al soggetto  ^.^| ELABORATO_OK +
+ELABORATO_KO +
+IN_ELABORAZIONE +
+NON_ACCETTATO +
+NOTIFICATO_DA_SDI +
+RICEVUTO_NSO
+^.^|NON_VALIDO ^.^|FINALE ^.^| Documento non valido  ^.^| ELABORATO_KO
 ^.^| ^.^| ^.^|  ^.^|
 |===
 
@@ -88,17 +113,19 @@ La tabella sottostante mostra tutti gli _stati_ associati al dominio _sessione d
 stato della sessione e il relativo _stato del documento_.
 
 .Sessione di conservazione e relativi stati
-[width="85%",cols="^,^,^,^">,options="header,footer"]
+[width="100%",cols="^,^,^,^">,options="header,footer"]
 |===
 |Stato ^|Tipo Stato| Descrizione Stato | Stato Documento
-^.^|DA_NON_INVIARE ^.^|INIZIALE_FINALE ^.^| Documento da non inviare in conservazione  ^.^|
-^.^|DA_INVIARE ^.^|INIZIALE ^.^|Documento da inviare in conservazione  ^.^|
-^.^|DA_ANNULLARE ^.^|INIZIALE ^.^|Documento da annallure SACER  ^.^|
-^.^|IN_ATTESA_DATI_FISCALI ^.^|INIZIALE ^.^|Documento in attesa di integrazione dei dati fiscali  ^.^|
-^.^|ANNULLATO ^.^|INIZIALE_INTERMEDIO ^.^|Documento annullato SACER  ^.^|
-^.^|INVIATO_OK ^.^|FINALE ^.^|Documento inviato in conservazione  ^.^|
-^.^|INVIATO_KO ^.^|FINALE ^.^|Documento non inviato in conservazione causa anomalia applicativa  ^.^|
-^.^|NON ANNULLABILE ^.^|FINALE ^.^|Documento non annullabile SACER  ^.^|
+^.^|DA_NON_INVIARE ^.^|INIZIALE_FINALE ^.^| Documento da non inviare in conservazione  ^.^| DA_NON_INVIARE
+^.^|DA_INVIARE ^.^|INIZIALE ^.^|Documento da inviare in conservazione  ^.^| DA_INVIARE +
+DA_NON_INVIARE
+^.^|DA_ANNULLARE ^.^|INIZIALE ^.^|Documento da annallure SACER  ^.^| DA_INVIARE
+^.^|IN_ATTESA_DATI_FISCALI ^.^|INIZIALE ^.^|Documento in attesa di integrazione dei dati fiscali  ^.^| DA_INVIARE
+^.^|ANNULLATO ^.^|INIZIALE_INTERMEDIO ^.^|Documento annullato SACER  ^.^| DA_NON_INVIARE +
+DA_INVIARE
+^.^|INVIATO_OK ^.^|FINALE ^.^|Documento inviato in conservazione  ^.^| INVIATO_OK
+^.^|INVIATO_KO ^.^|FINALE ^.^|Documento non inviato in conservazione causa anomalia applicativa  ^.^| INVIATO_KO
+^.^|NON ANNULLABILE ^.^|FINALE ^.^|Documento non annullabile SACER  ^.^| DA_INVIARE
 ^.^| ^.^| ^.^|  ^.^|
 |===
 
@@ -114,7 +141,7 @@ Le transizioni fra stati avvengono in seguito al verificarsi di particolari even
 Le transizioni tra stati possibili e innescate da eventi interni o esterni, che seguono le logiche funzionali di NoTI-ER, sono quelle descritte dalla tabella che segue.
 
 .Transizioni fra stati di sessioni e documento
-[width="85%",cols="^,^">,options="header,footer"]
+[width="100%",cols="^,^">,options="header,footer"]
 |===
 ^.^| Stato d'Origine| Stato di Destinazione
 2.1+s| SESSIONE DI INVIO
@@ -131,7 +158,7 @@ Le transizioni tra stati possibili e innescate da eventi interni o esterni, che 
 ^.^|DA_INVIARE_SDI ^.^| INVIATO_SDI
 ^.^|DA_TRASFORMARE ^.^| IN_LAVORAZIONE
 ^.^|DA_TRASFORMARE ^.^| DA_FIRMARE
-^.^|#IN_LAVORAZIONE# ^.^| NON_VALIDO
+^.^|IN_LAVORAZIONE ^.^| NON_VALIDO
 ^.^|INVIATO_NSO ^.^| SCARTATO_NSO
 ^.^|INVIATO_NSO ^.^| CONSEGNATO_NSO
 ^.^|INVIATO_NSO ^.^| DA_INVIARE_NSO
@@ -145,9 +172,8 @@ Le transizioni tra stati possibili e innescate da eventi interni o esterni, che 
 ^.^| DA_RECAPITARE ^.^| RECAPITATO
 ^.^| DA_TRASFORMARE ^.^| DA_RECAPITARE
 ^.^| DA_TRASFORMARE ^.^| IN_LAVORAZIONE
-^.^| #IN_LAVORAZIONE# ^.^| NON_VALIDO
 ^.^| NON_VALIDO ^.^| RECAPITATO
-^.^| TEMPORANEO_INBOUND ^.^| #IN_LAVORAZIONE#
+^.^| TEMPORANEO_INBOUND ^.^| NON_VALIDO
 ^.^| TEMPORANEO_INBOUND ^.^| DA_RECAPITARE
 2.1+s| SESSIONE DI CONSERVAZIONE
 ^.^| ANNULLATO ^.^| INVIATO_KO
@@ -156,7 +182,7 @@ Le transizioni tra stati possibili e innescate da eventi interni o esterni, che 
 ^.^| DA_ANNULLARE ^.^| ANNULLATO
 ^.^| DA_INVIARE ^.^| INVIATO_KO
 ^.^| DA_INVIARE ^.^| INVIATO_OK
-^.^| #IN_ATTESA_DATI_FISCALI# ^.^| DA_INVIARE
+^.^| IN_ATTESA_DATI_FISCALI ^.^| DA_INVIARE
 ^.^| INVIATO_KO ^.^| ANNULLATO
 ^.^| INVIATO_OK ^.^| ANNULLATO
 2.1+s| DOCUMENTO INVIO
@@ -193,14 +219,13 @@ Le transizioni tra stati possibili e innescate da eventi interni o esterni, che 
 |===
 
 
-=====
-.Eventi interni e job di NoTI-ER
+=== Eventi interni e job di NoTI-ER
 In relazione all'innesco di transizioni da parte di eventi interni, NoTI-ER utilizza una logica basata sullo *scheduling*, in un'ottica di esecuzione massiva della stessa azione
 su collezioni di documenti che si trovano nel medesimo stato. +
 Per effettuare le operazioni appena descritte, NoTI-ER si serve dei seguenti *Job* footnote:[per Job si intende l'unità di lavoro che uno scheduler invia al sistema operativo.].
 
 .Elenco dei Job di NoTI-ER
-[width="85%",cols="^,^,^">,options="header,footer"]
+[width="100%",cols="^,^,^">,options="header,footer"]
 |===
 |Job ^| Azione | Condizione
 ^.^s| ANNULLA_CONSERVAZIONE ^.^| Esegue l'invio della richiesta di annullamento conservazione verso ParER  ^.^| Lo stato della sessione di conservazione del documento è DA_ANNULLARE
@@ -214,4 +239,3 @@ Per effettuare le operazioni appena descritte, NoTI-ER si serve dei seguenti *Jo
 ^.^s| OUTBOUND_FLOW ^.^| Esegue l'invio su Peppol dei documenti ^.^| Lo stato della sessione di invio su Peppol del documento è DA_INOLTRARE_BUSDOX
 ^.^s| ^.^| ^.^|
 |===
-=====
